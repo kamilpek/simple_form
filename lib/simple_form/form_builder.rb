@@ -3,6 +3,7 @@ require 'simple_form/map_type'
 require 'simple_form/tags'
 
 module SimpleForm
+  # form builder class
   class FormBuilder < ActionView::Helpers::FormBuilder
     attr_reader :template, :object_name, :object, :wrapper
 

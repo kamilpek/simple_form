@@ -1,5 +1,6 @@
 module SimpleForm
   module Helpers
+    # required module
     module Required
       private
 
@@ -18,7 +19,7 @@ module SimpleForm
       end
 
       def required_by_validators?
-        (attribute_validators + reflection_validators).any? { |v| v.kind == :presence && valid_validator?(v) }
+        (attribute_validators + reflection_validators).any? { |valid| valid.kind == :presence && valid_validator?(valid) }
       end
 
       def required_by_default?

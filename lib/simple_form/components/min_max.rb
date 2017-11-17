@@ -1,5 +1,6 @@
 module SimpleForm
   module Components
+    # minmax component module
     module MinMax
       def min_max(wrapper_options = nil)
         if numeric_validator = find_numericality_validator

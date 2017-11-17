@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # Password Input class
     class PasswordInput < Base
       enable :placeholder, :maxlength, :minlength
 

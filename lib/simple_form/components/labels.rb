@@ -1,8 +1,10 @@
 module SimpleForm
   module Components
+    # lables module component
     module Labels
       extend ActiveSupport::Concern
 
+      # class methods labels modules module
       module ClassMethods #:nodoc:
         def translate_required_html
           i18n_cache :translate_required_html do

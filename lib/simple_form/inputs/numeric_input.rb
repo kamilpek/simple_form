@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # Numeric Input
     class NumericInput < Base
       enable :placeholder, :min_max
 

@@ -1,5 +1,6 @@
 module SimpleForm
   module Components
+    # html5 component module
     module HTML5
       def initialize(*)
         @html5 = false
@@ -21,11 +22,11 @@ module SimpleForm
       end
 
       def input_html_required_option
-        !options[:required].nil? ? required_field? : has_required?
+        options[:required] ? required_field? : has_required?
       end
 
       def input_html_aria_required_option
-        !options[:required].nil? ? (required_field? || nil) : (has_required? || nil)
+        options[:required] ? (required_field? || nil) : (has_required? || nil)
       end
 
       def has_required?

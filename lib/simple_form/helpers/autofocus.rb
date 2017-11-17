@@ -1,5 +1,6 @@
 module SimpleForm
   module Helpers
+    # autofocus module
     module Autofocus
       private
 

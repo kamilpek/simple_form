@@ -4,6 +4,7 @@ require 'action_view/helpers'
 
 module SimpleForm
   module Inputs
+    # base class
     class Base
       include ERB::Util
       include ActionView::Helpers::TranslationHelper
@@ -75,10 +76,10 @@ module SimpleForm
           input_html_classes << SimpleForm.input_class
         end
 
-        @input_html_options = html_options_for(:input, input_html_classes).tap do |o|
-          o[:readonly]  = true if has_readonly?
-          o[:disabled]  = true if has_disabled?
-          o[:autofocus] = true if has_autofocus?
+        @input_html_options = html_options_for(:input, input_html_classes).tap do |option|
+          option[:readonly]  = true if has_readonly?
+          option[:disabled]  = true if has_disabled?
+          option[:autofocus] = true if has_autofocus?
         end
       end
 

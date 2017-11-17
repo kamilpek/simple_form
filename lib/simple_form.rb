@@ -5,6 +5,7 @@ require 'active_support/core_ext/hash/slice'
 require 'active_support/core_ext/hash/except'
 require 'active_support/core_ext/hash/reverse_merge'
 
+# simple form module
 module SimpleForm
   extend ActiveSupport::Autoload
 
@@ -227,19 +228,19 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
     SimpleForm::Wrappers::Root.new(builder.to_a, options)
   end
 
-  wrappers class: :input, hint_class: :field_with_hint, error_class: :field_with_errors do |b|
-    b.use :html5
+  wrappers class: :input, hint_class: :field_with_hint, error_class: :field_with_errors do |build|
+    build.use :html5
 
-    b.use :min_max
-    b.use :maxlength
-    b.use :minlength
-    b.use :placeholder
-    b.optional :pattern
-    b.optional :readonly
+    build.use :min_max
+    build.use :maxlength
+    build.use :minlength
+    build.use :placeholder
+    build.optional :pattern
+    build.optional :readonly
 
-    b.use :label_input
-    b.use :hint,  wrap_with: { tag: :span, class: :hint }
-    b.use :error, wrap_with: { tag: :span, class: :error }
+    build.use :label_input
+    build.use :hint,  wrap_with: { tag: :span, class: :hint }
+    build.use :error, wrap_with: { tag: :span, class: :error }
   end
 
   def self.additional_classes_for(component)

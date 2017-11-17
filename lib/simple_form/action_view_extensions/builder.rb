@@ -31,6 +31,7 @@ module SimpleForm
 end
 
 module ActionView::Helpers
+  # FormBuilder Helper
   class FormBuilder
     include SimpleForm::ActionViewExtensions::Builder
   end

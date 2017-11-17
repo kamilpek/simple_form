@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # Grouped Collection Select Input class
     class GroupedCollectionSelectInput < CollectionInput
       def input(wrapper_options = nil)
         label_method, value_method = detect_collection_methods
@@ -45,8 +46,8 @@ module SimpleForm
 
         sample = collection_classes.first
 
-        { label: SimpleForm.collection_label_methods.find { |m| sample.instance_methods.include?(m) },
-          value: SimpleForm.collection_value_methods.find { |m| sample.instance_methods.include?(m) } }
+        { label: SimpleForm.collection_label_methods.find { |method| sample.instance_methods.include?(method) },
+          value: SimpleForm.collection_value_methods.find { |method| sample.instance_methods.include?(method) } }
       end
     end
   end

@@ -1,5 +1,6 @@
 module SimpleForm
   module Helpers
+    # disabled module
     module Disabled
       private
 

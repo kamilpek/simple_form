@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # boolean input class
     class BooleanInput < Base
       def input(wrapper_options = nil)
         merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)

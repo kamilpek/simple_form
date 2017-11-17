@@ -1,4 +1,5 @@
 module SimpleForm
+  # error notifications class
   class ErrorNotification
     delegate :object, :object_name, :template, to: :@builder
 

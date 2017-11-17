@@ -1,5 +1,6 @@
 module SimpleForm
   module Helpers
+    # validators module
     module Validators
       def has_validators?
         @has_validators ||= attribute_name && object.class.respond_to?(:validators_on)
@@ -37,7 +38,7 @@ module SimpleForm
       end
 
       def find_validator(kind)
-        attribute_validators.find { |v| v.kind == kind } if has_validators?
+        attribute_validators.find { |value| value.kind == kind } if has_validators?
       end
     end
   end

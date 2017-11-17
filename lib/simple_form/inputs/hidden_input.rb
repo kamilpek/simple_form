@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # Hidden Input class
     class HiddenInput < Base
       disable :label, :errors, :hint, :required
 

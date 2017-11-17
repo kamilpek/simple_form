@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # String Input class
     class StringInput < Base
       enable :placeholder, :maxlength, :minlength, :pattern
 

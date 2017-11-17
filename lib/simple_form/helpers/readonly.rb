@@ -1,5 +1,6 @@
 module SimpleForm
   module Helpers
+    # readonly module
     module Readonly
       private
 

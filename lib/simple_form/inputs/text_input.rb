@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # Text Input class
     class TextInput < Base
       enable :placeholder, :maxlength, :minlength
 

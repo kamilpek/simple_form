@@ -1,5 +1,6 @@
 module SimpleForm
   module Components
+    # errors module
     module Errors
       def error(wrapper_options = nil)
         error_text if has_errors?

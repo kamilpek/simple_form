@@ -1,0 +1,39 @@
+# Nil Check
+:source-highlighter: pygments
+:pygments-style: pastie
+:icons: font
+:experimental:
+:toc!:
+
+## https://github.com/troessner/reek/blob/master/docs/Nil-Check.md[Why and How?]
+
+## How to Refactor (Ruby Edition)
+* Remove suffix ".nil?" from condition.
+* Change "if" to "unless"
+
+## Example
+
+```ruby
+def wrapper(name, options = nil)
+  if block_given?
+    name, options = nil, name if name.is_a?(Hash)
+    builder = self.class.new(@options)
+    options ||= {}
+    options[:tag] = :div unless options[:tag]
+    yield builder
+    @components << Many.new(name, builder.to_a, options)
+  else
+    raise ArgumentError, "A block is required as argument to wrapper"
+  end
+end```
+.Step 1
+Remove suffix ".nil?" from condition.
+```ruby
+options[:wrapper] = self.options[:wrapper] if options[:wrapper]
+```
+
+.Step 2
+Change "if" to "unless".
+```ruby
+options[:wrapper] = self.options[:wrapper] unless options[:wrapper]
+```

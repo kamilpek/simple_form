@@ -1,6 +1,7 @@
 require 'rails/railtie'
 
 module SimpleForm
+  # Railtie module
   class Railtie < Rails::Railtie
     config.eager_load_namespaces << SimpleForm
 

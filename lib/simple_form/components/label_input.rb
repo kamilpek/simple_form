@@ -1,5 +1,6 @@
 module SimpleForm
   module Components
+    # label input component module
     module LabelInput
       extend ActiveSupport::Concern
 

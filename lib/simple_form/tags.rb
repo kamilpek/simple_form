@@ -1,5 +1,6 @@
 module SimpleForm
   module Tags
+    # Collection Extensions module
     module CollectionExtensions
       private
 
@@ -37,6 +38,7 @@ module SimpleForm
       end
     end
 
+    # Collection Radio Buttons class
     class CollectionRadioButtons < ActionView::Helpers::Tags::CollectionRadioButtons
       include CollectionExtensions
 
@@ -51,6 +53,7 @@ module SimpleForm
       end
     end
 
+    # Collection Check Buttons class
     class CollectionCheckBoxes < ActionView::Helpers::Tags::CollectionCheckBoxes
       include CollectionExtensions
 

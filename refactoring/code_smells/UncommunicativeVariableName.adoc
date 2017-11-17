@@ -1,0 +1,24 @@
+# Uncommunicative Variable Name
+:source-highlighter: pygments
+:pygments-style: pastie
+:icons: font
+:experimental:
+:toc!:
+
+## https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md[Why and How?]
+
+## How to Refactor (Ruby Edition)
+* Zmiana nazwy zmiennej na bardziej czytelną
+
+## Example
+
+```ruby
+def required_by_validators?
+  (attribute_validators + reflection_validators).any? { |valid| valid.kind == :presence && valid_validator?(valid) }
+end
+```
+.Step 1
+Zmiana nazwy zmiennej na bardziej czytelną, poprzez rozwinięcie jednego znaku do pełnego wyrazu.
+```ruby
+(attribute_validators + reflection_validators).any? { |valid| valid.kind == :presence && valid_validator?(valid) }
+```

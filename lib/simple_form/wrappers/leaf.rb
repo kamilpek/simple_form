@@ -1,5 +1,6 @@
 module SimpleForm
   module Wrappers
+    # leaf class
     class Leaf
       attr_reader :namespace
 

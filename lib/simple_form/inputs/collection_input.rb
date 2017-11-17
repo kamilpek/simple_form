@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # Collection Input class
     class CollectionInput < Base
       BASIC_OBJECT_CLASSES = [String, Integer, Float, NilClass, Symbol, TrueClass, FalseClass]
       BASIC_OBJECT_CLASSES.push(Fixnum, Bignum) unless 1.class == Integer
@@ -84,12 +85,12 @@ module SimpleForm
       def detect_method_from_class(collection_classes)
         sample = collection.first || collection.last
 
-        { label: SimpleForm.collection_label_methods.find { |m| sample.respond_to?(m) },
-          value: SimpleForm.collection_value_methods.find { |m| sample.respond_to?(m) } }
+        { label: SimpleForm.collection_label_methods.find { |method| sample.respond_to?(method) },
+          value: SimpleForm.collection_value_methods.find { |method| sample.respond_to?(method) } }
       end
 
       def detect_collection_classes(some_collection = collection)
-        some_collection.map { |e| e.class }.uniq
+        some_collection.map { |error| error.class }.uniq
       end
 
       def collection_includes_basic_objects?(collection_classes)

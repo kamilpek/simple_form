@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # Range Input class
     class RangeInput < NumericInput
       def input(wrapper_options = nil)
         if html5?

@@ -35,10 +35,10 @@ module SimpleForm
       def find(name)
         return self if namespace == name
 
-        @components.each do |c|
-          if c.is_a?(Symbol)
-            return nil if c == namespace
-          elsif value = c.find(name)
+        @components.each do |comp|
+          if comp.is_a?(Symbol)
+            return nil if comp == namespace
+          elsif value = comp.find(name)
             return value
           end
         end

@@ -63,7 +63,7 @@ module SimpleForm
           name, options = nil, name if name.is_a?(Hash)
           builder = self.class.new(@options)
           options ||= {}
-          options[:tag] = :div if options[:tag].nil?
+          options[:tag] = :div unless options[:tag]
           yield builder
           @components << Many.new(name, builder.to_a, options)
         else

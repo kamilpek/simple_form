@@ -1,4 +1,5 @@
 module SimpleForm
+  # Wrappers module
   module Wrappers
     autoload :Builder, 'simple_form/wrappers/builder'
     autoload :Many,    'simple_form/wrappers/many'

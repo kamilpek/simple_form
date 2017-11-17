@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # block input class
     class BlockInput < Base
       def initialize(*args, &block)
         super

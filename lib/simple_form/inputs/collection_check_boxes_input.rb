@@ -1,5 +1,6 @@
 module SimpleForm
   module Inputs
+    # Collection Check Boxes Input class
     class CollectionCheckBoxesInput < CollectionRadioButtonsInput
       protected
 
