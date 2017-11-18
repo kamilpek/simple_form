@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# eneral Input Test class
 class InputTest < ActionView::TestCase
   test 'input generates css class based on default input type' do
     with_input_for @user, :name, :string

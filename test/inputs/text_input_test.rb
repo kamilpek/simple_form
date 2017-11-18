@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Text Input Test class
 class TextInputTest < ActionView::TestCase
   test 'input generates a text area for text attributes' do
     with_input_for @user, :description, :text

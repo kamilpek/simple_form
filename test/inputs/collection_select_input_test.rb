@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Collection Select Input Test class
 class CollectionSelectInputTest < ActionView::TestCase
   setup do
     SimpleForm::Inputs::CollectionSelectInput.reset_i18n_cache :boolean_collection
@@ -242,8 +243,8 @@ class CollectionSelectInputTest < ActionView::TestCase
   test 'input allows overriding label and value method using a lambda for collection selects' do
     with_input_for @user, :name, :select,
                           collection: ['Jose', 'Carlos'],
-                          label_method: lambda { |i| i.upcase },
-                          value_method: lambda { |i| i.downcase }
+                          label_method: lambda { |item| item.upcase },
+                          value_method: lambda { |item| item.downcase }
     assert_select 'select option[value=jose]', "JOSE"
     assert_select 'select option[value=carlos]', "CARLOS"
   end
@@ -251,7 +252,7 @@ class CollectionSelectInputTest < ActionView::TestCase
   test 'input allows overriding only label but not value method using a lambda for collection select' do
     with_input_for @user, :name, :select,
                           collection: ['Jose', 'Carlos'],
-                          label_method: lambda { |i| i.upcase }
+                          label_method: lambda { |item| item.upcase }
     assert_select 'select option[value=Jose]', "JOSE"
     assert_select 'select option[value=Carlos]', "CARLOS"
   end
@@ -259,7 +260,7 @@ class CollectionSelectInputTest < ActionView::TestCase
   test 'input allows overriding only value but not label method using a lambda for collection select' do
     with_input_for @user, :name, :select,
                           collection: ['Jose', 'Carlos'],
-                          value_method: lambda { |i| i.downcase }
+                          value_method: lambda { |item| item.downcase }
     assert_select 'select option[value=jose]', "Jose"
     assert_select 'select option[value=carlos]', "Carlos"
   end
@@ -328,7 +329,7 @@ class CollectionSelectInputTest < ActionView::TestCase
 
   test 'input allows disabled options with a lambda for collection select' do
     with_input_for @user, :name, :select, collection: ["Carlos", "Antonio"],
-      disabled: lambda { |x| x == "Carlos" }
+      disabled: lambda { |value| value == "Carlos" }
     assert_select 'select option[value=Carlos][disabled=disabled]', 'Carlos'
     assert_select 'select option[value=Antonio]', 'Antonio'
     assert_no_select 'select option[value=Antonio][disabled]'
@@ -336,7 +337,7 @@ class CollectionSelectInputTest < ActionView::TestCase
 
   test 'input allows disabled and label method with lambdas for collection select' do
     with_input_for @user, :name, :select, collection: ["Carlos", "Antonio"],
-      disabled: lambda { |x| x == "Carlos" }, label_method: lambda { |x| x.upcase }
+      disabled: lambda { |value| value == "Carlos" }, label_method: lambda { |value| value.upcase }
     assert_select 'select option[value=Carlos][disabled=disabled]', 'CARLOS'
     assert_select 'select option[value=Antonio]', 'ANTONIO'
     assert_no_select 'select option[value=Antonio][disabled]'
@@ -344,7 +345,7 @@ class CollectionSelectInputTest < ActionView::TestCase
 
   test 'input allows a non lambda disabled option with lambda label method for collections' do
     with_input_for @user, :name, :select, collection: ["Carlos", "Antonio"],
-      disabled: "Carlos", label_method: lambda { |x| x.upcase }
+      disabled: "Carlos", label_method: lambda { |value| value.upcase }
     assert_select 'select option[value=Carlos][disabled=disabled]', 'CARLOS'
     assert_select 'select option[value=Antonio]', 'ANTONIO'
     assert_no_select 'select option[value=Antonio][disabled]'
@@ -352,7 +353,7 @@ class CollectionSelectInputTest < ActionView::TestCase
 
   test 'input allows selected and label method with lambdas for collection select' do
     with_input_for @user, :name, :select, collection: ["Carlos", "Antonio"],
-      selected: lambda { |x| x == "Carlos" }, label_method: lambda { |x| x.upcase }
+      selected: lambda { |value| value == "Carlos" }, label_method: lambda { |value| value.upcase }
     assert_select 'select option[value=Carlos][selected=selected]', 'CARLOS'
     assert_select 'select option[value=Antonio]', 'ANTONIO'
     assert_no_select 'select option[value=Antonio][selected]'
@@ -360,7 +361,7 @@ class CollectionSelectInputTest < ActionView::TestCase
 
   test 'input allows a non lambda selected option with lambda label method for collection select' do
     with_input_for @user, :name, :select, collection: ["Carlos", "Antonio"],
-      selected: "Carlos", label_method: lambda { |x| x.upcase }
+      selected: "Carlos", label_method: lambda { |value| value.upcase }
     assert_select 'select option[value=Carlos][selected=selected]', 'CARLOS'
     assert_select 'select option[value=Antonio]', 'ANTONIO'
     assert_no_select 'select option[value=Antonio][selected]'
@@ -369,7 +370,7 @@ class CollectionSelectInputTest < ActionView::TestCase
   test 'input does not override default selection through attribute value with label method as lambda for collection select' do
     @user.name = "Carlos"
     with_input_for @user, :name, :select, collection: ["Carlos", "Antonio"],
-      label_method: lambda { |x| x.upcase }
+      label_method: lambda { |value| value.upcase }
     assert_select 'select option[value=Carlos][selected=selected]', 'CARLOS'
     assert_select 'select option[value=Antonio]', 'ANTONIO'
     assert_no_select 'select option[value=Antonio][selected]'

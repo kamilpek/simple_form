@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# Disabled Test class
 class DisabledTest < ActionView::TestCase
   test 'string input is disabled when disabled option is true' do
     with_input_for @user, :name, :string, disabled: true

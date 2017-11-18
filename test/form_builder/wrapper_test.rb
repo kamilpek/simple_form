@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# wrapper test class
 class WrapperTest < ActionView::TestCase
   test 'wrapper does not have error class for attribute without errors' do
     with_form_for @user, :active
@@ -18,8 +19,8 @@ class WrapperTest < ActionView::TestCase
 
   test 'wrapper adds the attribute name class for nested forms' do
     @user.company = Company.new(1, 'Empresa')
-    with_concat_form_for @user do |f|
-      concat(f.simple_fields_for(:company) do |company_form|
+    with_concat_form_for @user do |form|
+      concat(form.simple_fields_for(:company) do |company_form|
         concat(company_form.input :name)
       end)
     end
@@ -145,15 +146,15 @@ class WrapperTest < ActionView::TestCase
 
   test 'custom wrappers on a form basis' do
     swap_wrapper :another do
-      with_concat_form_for(@user) do |f|
-        f.input :name
+      with_concat_form_for(@user) do |form|
+        form.input :name
       end
 
       assert_no_select "section.custom_wrapper div.another_wrapper label"
       assert_no_select "section.custom_wrapper div.another_wrapper input.string"
 
-      with_concat_form_for(@user, wrapper: :another) do |f|
-        f.input :name
+      with_concat_form_for(@user, wrapper: :another) do |form|
+        form.input :name
       end
 
       assert_select "section.custom_wrapper div.another_wrapper label"
@@ -189,9 +190,9 @@ class WrapperTest < ActionView::TestCase
 
   test 'does not duplicate label classes for different inputs' do
     swap_wrapper :default, custom_wrapper_with_label_html_option do
-      with_concat_form_for(@user) do |f|
-        concat f.input :name, required: false
-        concat f.input :email, as: :email, required: true
+      with_concat_form_for(@user) do |form|
+        concat form.input :name, required: false
+        concat form.input :email, as: :email, required: true
       end
 
       assert_select "label.string.optional.extra-label-class[for='user_name']"
@@ -218,8 +219,8 @@ class WrapperTest < ActionView::TestCase
 
   test 'uses custom wrapper mapping per form basis' do
     swap_wrapper :another do
-      with_concat_form_for @user, wrapper_mappings: { string: :another } do |f|
-        concat f.input :name
+      with_concat_form_for @user, wrapper_mappings: { string: :another } do |form|
+        concat form.input :name
       end
     end
 
@@ -231,8 +232,8 @@ class WrapperTest < ActionView::TestCase
     @user.company = Company.new(1, 'Empresa')
 
     swap_wrapper :another do
-      with_concat_form_for @user, wrapper_mappings: { string: :another } do |f|
-        concat(f.simple_fields_for(:company) do |company_form|
+      with_concat_form_for @user, wrapper_mappings: { string: :another } do |form|
+        concat(form.simple_fields_for(:company) do |company_form|
           concat(company_form.input(:name))
         end)
       end
@@ -244,8 +245,8 @@ class WrapperTest < ActionView::TestCase
 
   test "input attributes class will merge with wrapper_options' classes" do
     swap_wrapper :default, custom_wrapper_with_input_class do
-      with_concat_form_for @user do |f|
-        concat f.input :name, input_html: { class: 'another-class' }
+      with_concat_form_for @user do |form|
+        concat form.input :name, input_html: { class: 'another-class' }
       end
     end
 
@@ -254,8 +255,8 @@ class WrapperTest < ActionView::TestCase
 
   test "input with data attributes will merge with wrapper_options' data" do
     swap_wrapper :default, custom_wrapper_with_input_data_modal do
-      with_concat_form_for @user do |f|
-        concat f.input :name, input_html: { data: { modal: 'another-data', target: 'merge-data' } }
+      with_concat_form_for @user do |form|
+        concat form.input :name, input_html: { data: { modal: 'another-data', target: 'merge-data' } }
       end
     end
 
@@ -266,8 +267,8 @@ class WrapperTest < ActionView::TestCase
     skip unless ActionPack::VERSION::MAJOR == '4' && ActionPack::VERSION::MINOR >= '2'
 
     swap_wrapper :default, custom_wrapper_with_input_aria_modal do
-      with_concat_form_for @user do |f|
-        concat f.input :name, input_html: { aria: { modal: 'another-aria', target: 'merge-aria' } }
+      with_concat_form_for @user do |form|
+        concat form.input :name, input_html: { aria: { modal: 'another-aria', target: 'merge-aria' } }
       end
     end
 
@@ -276,8 +277,8 @@ class WrapperTest < ActionView::TestCase
 
   test 'input accepts attributes in the DSL' do
     swap_wrapper :default, custom_wrapper_with_input_class do
-      with_concat_form_for @user do |f|
-        concat f.input :name
+      with_concat_form_for @user do |form|
+        concat form.input :name
       end
     end
 
@@ -286,8 +287,8 @@ class WrapperTest < ActionView::TestCase
 
   test 'label accepts attributes in the DSL' do
     swap_wrapper :default, custom_wrapper_with_label_class do
-      with_concat_form_for @user do |f|
-        concat f.input :name
+      with_concat_form_for @user do |form|
+        concat form.input :name
       end
     end
 
@@ -296,8 +297,8 @@ class WrapperTest < ActionView::TestCase
 
   test 'label_input accepts attributes in the DSL' do
     swap_wrapper :default, custom_wrapper_with_label_input_class do
-      with_concat_form_for @user do |f|
-        concat f.input :name
+      with_concat_form_for @user do |form|
+        concat form.input :name
       end
     end
 
@@ -307,8 +308,8 @@ class WrapperTest < ActionView::TestCase
 
   test 'input accepts data attributes in the DSL' do
     swap_wrapper :default, custom_wrapper_with_input_attributes do
-      with_concat_form_for @user do |f|
-        concat f.input :name
+      with_concat_form_for @user do |form|
+        concat form.input :name
       end
     end
 

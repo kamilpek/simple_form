@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# discovert test class
 class DiscoveryTest < ActionView::TestCase
   # Setup new inputs and remove them after the test.
   def discovery(value = false)

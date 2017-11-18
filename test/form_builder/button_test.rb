@@ -1,10 +1,11 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# button test class
 class ButtonTest < ActionView::TestCase
   def with_button_for(object, *args)
-    with_concat_form_for(object) do |f|
-      f.button(*args)
+    with_concat_form_for(object) do |form|
+      form.button(*args)
     end
   end
 

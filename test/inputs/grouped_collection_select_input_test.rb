@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Grouped Collection Select Input Test class
 class GroupedCollectionSelectInputTest < ActionView::TestCase
   test 'grouped collection accepts array collection form' do
     with_input_for @user, :tag_ids, :grouped_select,
@@ -82,6 +83,7 @@ class GroupedCollectionSelectInputTest < ActionView::TestCase
   test 'grouped collection finds default label methods on the group objects' do
     option_list = ['Jose', 'Carlos']
 
+    # grouped class
     GroupedClass = Struct.new(:to_label, :options)
     group = GroupedClass.new("Authors", option_list)
 
@@ -98,6 +100,8 @@ class GroupedCollectionSelectInputTest < ActionView::TestCase
   end
 
   test 'grouped collections finds the default label method from the first non-empty object' do
+
+    # agent class
     Agent = Struct.new(:id, :name)
     agents = [["First", []], ["Second", [Agent.new(7, 'Bond'), Agent.new(47, 'Hitman')]]]
 
@@ -134,8 +138,8 @@ class GroupedCollectionSelectInputTest < ActionView::TestCase
     with_input_for @user, :tag_ids, :grouped_select,
       collection: { 'Authors' => ['Jose', 'Carlos'] },
       group_method: :last,
-      label_method: lambda { |i| i.upcase },
-      value_method: lambda { |i| i.downcase }
+      label_method: lambda { |item| item.upcase },
+      value_method: lambda { |item| item.downcase }
 
     assert_select 'select.grouped_select#user_tag_ids' do
       assert_select 'optgroup[label=Authors]' do

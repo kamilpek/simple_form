@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Collection Check Boxes Input Test class
 class CollectionCheckBoxesInputTest < ActionView::TestCase
   setup do
     SimpleForm::Inputs::CollectionCheckBoxesInput.reset_i18n_cache :boolean_collection
@@ -281,8 +282,8 @@ class CollectionCheckBoxesInputTest < ActionView::TestCase
 
   test 'input check boxes with nested style and namespace uses the right for attribute' do
     swap SimpleForm, include_default_input_wrapper_class: false, boolean_style: :nested do
-      with_concat_form_for @user, namespace: :foo do |f|
-        concat f.input :gender, as: :check_boxes, collection: [:male, :female]
+      with_concat_form_for @user, namespace: :foo do |form|
+        concat form.input :gender, as: :check_boxes, collection: [:male, :female]
       end
 
       assert_select 'label[for=foo_user_gender_male]'
@@ -292,8 +293,8 @@ class CollectionCheckBoxesInputTest < ActionView::TestCase
 
   test 'input check boxes with nested style and index uses the right for attribute' do
     swap SimpleForm, include_default_input_wrapper_class: false, boolean_style: :nested do
-      with_concat_form_for @user, index: 1 do |f|
-        concat f.input :gender, as: :check_boxes, collection: [:male, :female]
+      with_concat_form_for @user, index: 1 do |form|
+        concat form.input :gender, as: :check_boxes, collection: [:male, :female]
       end
 
       assert_select 'label[for=user_1_gender_male]'

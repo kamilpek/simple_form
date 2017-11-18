@@ -1,10 +1,11 @@
 require 'test_helper'
 
+# form helper test class
 class FormHelperTest < ActionView::TestCase
 
   test 'SimpleForm for yields an instance of FormBuilder' do
-    simple_form_for :user do |f|
-      assert f.instance_of?(SimpleForm::FormBuilder)
+    simple_form_for :user do |form|
+      assert form.instance_of?(SimpleForm::FormBuilder)
     end
   end
 
@@ -110,15 +111,15 @@ class FormHelperTest < ActionView::TestCase
   end
 
   test 'form_for yields an instance of FormBuilder' do
-    with_concat_form_for(:user) do |f|
-      assert f.instance_of?(SimpleForm::FormBuilder)
+    with_concat_form_for(:user) do |form|
+      assert form.instance_of?(SimpleForm::FormBuilder)
     end
   end
 
   test 'fields_for with a hash like model yields an instance of FormBuilder' do
-    with_concat_fields_for(:author, HashBackedAuthor.new) do |f|
-      assert f.instance_of?(SimpleForm::FormBuilder)
-      f.input :name
+    with_concat_fields_for(:author, HashBackedAuthor.new) do |form|
+      assert form.instance_of?(SimpleForm::FormBuilder)
+      form.input :name
     end
 
     assert_select "input[name='author[name]'][value='hash backed author']"
@@ -127,7 +128,7 @@ class FormHelperTest < ActionView::TestCase
   test 'custom error proc is not destructive' do
     swap_field_error_proc do
       result = nil
-      simple_form_for :user do |f|
+      simple_form_for :user do |form|
         result = simple_fields_for 'address' do
           'hello'
         end
@@ -140,7 +141,7 @@ class FormHelperTest < ActionView::TestCase
   test 'custom error proc survives an exception' do
     swap_field_error_proc do
       begin
-        simple_form_for :user do |f|
+        simple_form_for :user do |form|
           simple_fields_for 'address' do
             raise 'an exception'
           end
@@ -153,7 +154,7 @@ class FormHelperTest < ActionView::TestCase
   test 'SimpleForm for swaps default action view field_error_proc' do
     expected_error_proc = lambda {}
     swap SimpleForm, field_error_proc: expected_error_proc do
-      simple_form_for :user do |f|
+      simple_form_for :user do |form|
         assert_equal expected_error_proc, ::ActionView::Base.field_error_proc
       end
     end

@@ -3,14 +3,14 @@ require 'test_helper'
 # Tests for f.error and f.full_error
 class ErrorTest < ActionView::TestCase
   def with_error_for(object, *args)
-    with_concat_form_for(object) do |f|
-      f.error(*args)
+    with_concat_form_for(object) do |form|
+      form.error(*args)
     end
   end
 
   def with_full_error_for(object, *args)
-    with_concat_form_for(object) do |f|
-      f.full_error(*args)
+    with_concat_form_for(object) do |form|
+      form.full_error(*args)
     end
   end
 

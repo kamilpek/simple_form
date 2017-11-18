@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# File Input Test
 class FileInputTest < ActionView::TestCase
   test 'input generates a file field' do
     with_input_for @user, :name, :file

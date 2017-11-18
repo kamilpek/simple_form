@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# Simple Form Test
 class SimpleFormTest < ActiveSupport::TestCase
   test 'setup block yields self' do
     SimpleForm.setup do |config|

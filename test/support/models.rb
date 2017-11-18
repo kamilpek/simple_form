@@ -1,8 +1,11 @@
+# association struct
 Association = Struct.new(:klass, :name, :macro, :scope, :options)
 
+# column struct
 Column = Struct.new(:name, :type, :limit) do
 end
 
+# relatcion struct
 Relation = Struct.new(:records) do
   delegate :each, to: :records
 
@@ -18,6 +21,7 @@ Relation = Struct.new(:records) do
   alias_method :to_ary, :records
 end
 
+# picture struct
 Picture = Struct.new(:id, :name) do
   extend ActiveModel::Naming
   include ActiveModel::Conversion
@@ -35,6 +39,7 @@ Picture = Struct.new(:id, :name) do
   end
 end
 
+# company struct
 Company = Struct.new(:id, :name) do
   extend ActiveModel::Naming
   include ActiveModel::Conversion
@@ -58,6 +63,7 @@ end
 
 class Tag < Company; end
 
+# tag group struct
 TagGroup = Struct.new(:id, :name, :tags)
 
 class User
@@ -289,6 +295,7 @@ class OtherValidatingUser < User
   validates_format_of :description, without: /\d+/
 end
 
+# Hash Backed Author class
 class HashBackedAuthor < Hash
   extend ActiveModel::Naming
   include ActiveModel::Conversion
@@ -300,5 +307,6 @@ class HashBackedAuthor < Hash
   end
 end
 
+# User Number 1And2 class
 class UserNumber1And2 < User
 end

@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Priority Input Test class
 class PriorityInputTest < ActionView::TestCase
   test 'input generates a country select field' do
     with_input_for @user, :country, :country

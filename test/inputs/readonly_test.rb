@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# Readonly Test class
 class ReadonlyTest < ActionView::TestCase
   test 'string input generates readonly elements when readonly option is true' do
     with_input_for @user, :name, :string, readonly: true

@@ -60,8 +60,8 @@ class DateTimeInputWithoutHtml5Test < ActionView::TestCase
   test 'input generates a datetime select by default for datetime attributes' do
     swap_wrapper do
       with_input_for @user, :created_at, :datetime
-      1.upto(5) do |i|
-        assert_select "form select.datetime#user_created_at_#{i}i"
+      1.upto(5) do |item|
+        assert_select "form select.datetime#user_created_at_#{item}i"
       end
     end
   end

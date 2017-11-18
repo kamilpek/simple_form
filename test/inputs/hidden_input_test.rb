@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Hidden Input Test test
 class HiddenInputTest < ActionView::TestCase
   test 'input generates a hidden field' do
     with_input_for @user, :name, :hidden

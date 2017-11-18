@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# Required Test class
 class RequiredTest < ActionView::TestCase
   # REQUIRED AND PRESENCE VALIDATION
   test 'builder input obtains required from ActiveModel::Validations when it is included' do
@@ -59,8 +60,8 @@ class RequiredTest < ActionView::TestCase
   test 'when not using browser validations, when required option is true in the wrapper, input does not generate required html attribute' do
     swap SimpleForm, browser_validations: false do
       swap_wrapper :default, self.custom_wrapper_with_required_input do
-        with_concat_form_for(@user) do |f|
-          concat f.input :name
+        with_concat_form_for(@user) do |form|
+          concat form.input :name
         end
         assert_select 'input[type=text].required'
         assert_no_select 'input[type=text][required]'
@@ -146,8 +147,8 @@ class RequiredTest < ActionView::TestCase
   test 'builder input does not generate required html attribute when option is set to false when it is set to true in wrapper' do
     swap SimpleForm, browser_validations: true do
       swap_wrapper :default, self.custom_wrapper_with_required_input do
-        with_concat_form_for(@user) do |f|
-          concat f.input :name, required: false
+        with_concat_form_for(@user) do |form|
+          concat form.input :name, required: false
         end
         assert_no_select 'input[type=text][required]'
         assert_no_select 'input[type=text][aria-required]'

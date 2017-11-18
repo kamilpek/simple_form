@@ -1,22 +1,23 @@
 require 'test_helper'
 
+# builder test class
 class BuilderTest < ActionView::TestCase
   def with_custom_form_for(object, *args, &block)
-    with_concat_custom_form_for(object) do |f|
-      assert f.instance_of?(CustomFormBuilder)
-      yield f
+    with_concat_custom_form_for(object) do |form|
+      assert form.instance_of?(CustomFormBuilder)
+      yield form
     end
   end
 
   def with_collection_radio_buttons(object, attribute, collection, value_method, text_method, options = {}, html_options = {}, &block)
-    with_concat_form_for(object) do |f|
-      f.collection_radio_buttons attribute, collection, value_method, text_method, options, html_options, &block
+    with_concat_form_for(object) do |form|
+      form.collection_radio_buttons attribute, collection, value_method, text_method, options, html_options, &block
     end
   end
 
   def with_collection_check_boxes(object, attribute, collection, value_method, text_method, options = {}, html_options = {}, &block)
-    with_concat_form_for(object) do |f|
-      f.collection_check_boxes attribute, collection, value_method, text_method, options, html_options, &block
+    with_concat_form_for(object) do |form|
+      form.collection_check_boxes attribute, collection, value_method, text_method, options, html_options, &block
     end
   end
 
@@ -189,8 +190,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection radio accepts a block to render the label as radio button wrapper" do
-    with_collection_radio_buttons :user, :active, [true, false], :to_s, :to_s do |b|
-      b.label { b.radio_button }
+    with_collection_radio_buttons :user, :active, [true, false], :to_s, :to_s do |button|
+      button.label { button.radio_button }
     end
 
     assert_select 'label[for=user_active_true] > input#user_active_true[type=radio]'
@@ -198,8 +199,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection radio accepts a block to change the order of label and radio button" do
-    with_collection_radio_buttons :user, :active, [true, false], :to_s, :to_s do |b|
-      b.label + b.radio_button
+    with_collection_radio_buttons :user, :active, [true, false], :to_s, :to_s do |button|
+      button.label + button.radio_button
     end
 
     assert_select 'label[for=user_active_true] + input#user_active_true[type=radio]'
@@ -207,8 +208,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection radio with block helpers accept extra html options" do
-    with_collection_radio_buttons :user, :active, [true, false], :to_s, :to_s do |b|
-      b.label(class: "radio_button") + b.radio_button(class: "radio_button")
+    with_collection_radio_buttons :user, :active, [true, false], :to_s, :to_s do |button|
+      button.label(class: "radio_button") + button.radio_button(class: "radio_button")
     end
 
     assert_select 'label.radio_button[for=user_active_true] + input#user_active_true.radio_button[type=radio]'
@@ -216,8 +217,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection radio with block helpers allows access to current text and value" do
-    with_collection_radio_buttons :user, :active, [true, false], :to_s, :to_s do |b|
-      b.label(:"data-value" => b.value) { b.radio_button + b.text }
+    with_collection_radio_buttons :user, :active, [true, false], :to_s, :to_s do |button|
+      button.label(:"data-value" => button.value) { button.radio_button + button.text }
     end
 
     assert_select 'label[for=user_active_true][data-value=true]', 'true' do
@@ -229,8 +230,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection radio with block helpers allows access to the current object item in the collection to access extra properties" do
-    with_collection_radio_buttons :user, :active, [true, false], :to_s, :to_s do |b|
-      b.label(class: b.object) { b.radio_button + b.text }
+    with_collection_radio_buttons :user, :active, [true, false], :to_s, :to_s do |button|
+      button.label(class: button.object) { button.radio_button + button.text }
     end
 
     assert_select 'label.true[for=user_active_true]', 'true' do
@@ -242,13 +243,13 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection radio with block helpers does not leak the template" do
-    with_concat_form_for(@user) do |f|
-      collection_input =  f.collection_radio_buttons :active, [true, false], :to_s, :to_s do |b|
-        b.label(class: b.object) { b.radio_button + b.text }
+    with_concat_form_for(@user) do |form|
+      collection_input =  form.collection_radio_buttons :active, [true, false], :to_s, :to_s do |button|
+        button.label(class: button.object) { button.radio_button + button.text }
       end
       concat collection_input
 
-      concat f.hidden_field :name
+      concat form.hidden_field :name
     end
 
     assert_select 'label.true[for=user_active_true]', text: 'true', count: 1 do
@@ -297,7 +298,7 @@ class BuilderTest < ActionView::TestCase
 
   test "collection check box checks the correct value to local variables" do
     user = User.build(tag_ids: [1, 3])
-    collection = (1..3).map { |i| [i, "Tag #{i}"] }
+    collection = (1..3).map { |item| [item, "Tag #{item}"] }
 
     with_collection_check_boxes user, :tag_ids, collection, :first, :last
 
@@ -307,7 +308,7 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check box accepts selected values as :checked option" do
-    collection = (1..3).map { |i| [i, "Tag #{i}"] }
+    collection = (1..3).map { |item| [item, "Tag #{item}"] }
     with_collection_check_boxes @user, :tag_ids, collection, :first, :last, checked: [1, 3]
 
     assert_select 'form input[type=checkbox][value="1"][checked=checked]'
@@ -316,7 +317,7 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check boxes accepts selected string values as :checked option" do
-    collection = (1..3).map { |i| [i, "Category #{i}"] }
+    collection = (1..3).map { |item| [item, "Category #{item}"] }
     with_collection_check_boxes :user, :category_ids, collection, :first, :last, checked: ['1', '3']
 
     assert_select 'input[type=checkbox][value="1"][checked=checked]'
@@ -325,7 +326,7 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check box accepts a single checked value" do
-    collection = (1..3).map { |i| [i, "Tag #{i}"] }
+    collection = (1..3).map { |item| [item, "Tag #{item}"] }
     with_collection_check_boxes @user, :tag_ids, collection, :first, :last, checked: 3
 
     assert_select 'form input[type=checkbox][value="3"][checked=checked]'
@@ -334,7 +335,7 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check box accepts selected values as :checked option and override the model values" do
-    collection = (1..3).map { |i| [i, "Tag #{i}"] }
+    collection = (1..3).map { |item| [item, "Tag #{item}"] }
     @user.tag_ids = [2]
     with_collection_check_boxes @user, :tag_ids, collection, :first, :last, checked: [1, 3]
 
@@ -344,7 +345,7 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check box accepts multiple disabled items" do
-    collection = (1..3).map { |i| [i, "Tag #{i}"] }
+    collection = (1..3).map { |item| [item, "Tag #{item}"] }
     with_collection_check_boxes @user, :tag_ids, collection, :first, :last, disabled: [1, 3]
 
     assert_select 'form input[type=checkbox][value="1"][disabled=disabled]'
@@ -353,7 +354,7 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check box accepts single disable item" do
-    collection = (1..3).map { |i| [i, "Tag #{i}"] }
+    collection = (1..3).map { |item| [item, "Tag #{item}"] }
     with_collection_check_boxes @user, :tag_ids, collection, :first, :last, disabled: 1
 
     assert_select 'form input[type=checkbox][value="1"][disabled=disabled]'
@@ -362,8 +363,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check box accepts a proc to disabled items" do
-    collection = (1..3).map { |i| [i, "Tag #{i}"] }
-    with_collection_check_boxes @user, :tag_ids, collection, :first, :last, disabled: proc { |i| i.first == 1 }
+    collection = (1..3).map { |item| [item, "Tag #{item}"] }
+    with_collection_check_boxes @user, :tag_ids, collection, :first, :last, disabled: proc { |item| item.first == 1 }
 
     assert_select 'form input[type=checkbox][value="1"][disabled=disabled]'
     assert_no_select 'form input[type=checkbox][value="3"][disabled=disabled]'
@@ -380,9 +381,9 @@ class BuilderTest < ActionView::TestCase
 
   test "collection check box with fields for" do
     collection = [Tag.new(1, 'Tag 1'), Tag.new(2, 'Tag 2')]
-    with_concat_form_for(@user) do |f|
-      f.fields_for(:post) do |p|
-        p.collection_check_boxes :tag_ids, collection, :id, :name
+    with_concat_form_for(@user) do |form|
+      form.fields_for(:post) do |post|
+        post.collection_check_boxes :tag_ids, collection, :id, :name
       end
     end
 
@@ -487,8 +488,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check boxes accepts a block to render the label as check box wrapper" do
-    with_collection_check_boxes :user, :active, [true, false], :to_s, :to_s do |b|
-      b.label { b.check_box }
+    with_collection_check_boxes :user, :active, [true, false], :to_s, :to_s do |box|
+      box.label { box.check_box }
     end
 
     assert_select 'label[for=user_active_true] > input#user_active_true[type=checkbox]'
@@ -496,8 +497,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check boxes accepts a block to change the order of label and check box" do
-    with_collection_check_boxes :user, :active, [true, false], :to_s, :to_s do |b|
-      b.label + b.check_box
+    with_collection_check_boxes :user, :active, [true, false], :to_s, :to_s do |box|
+      box.label + box.check_box
     end
 
     assert_select 'label[for=user_active_true] + input#user_active_true[type=checkbox]'
@@ -505,8 +506,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check boxes with block helpers accept extra html options" do
-    with_collection_check_boxes :user, :active, [true, false], :to_s, :to_s do |b|
-      b.label(class: "check_box") + b.check_box(class: "check_box")
+    with_collection_check_boxes :user, :active, [true, false], :to_s, :to_s do |box|
+      box.label(class: "check_box") + box.check_box(class: "check_box")
     end
 
     assert_select 'label.check_box[for=user_active_true] + input#user_active_true.check_box[type=checkbox]'
@@ -514,8 +515,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check boxes with block helpers allows access to current text and value" do
-    with_collection_check_boxes :user, :active, [true, false], :to_s, :to_s do |b|
-      b.label(:"data-value" => b.value) { b.check_box + b.text }
+    with_collection_check_boxes :user, :active, [true, false], :to_s, :to_s do |box|
+      box.label(:"data-value" => box.value) { box.check_box + box.text }
     end
 
     assert_select 'label[for=user_active_true][data-value=true]', 'true' do
@@ -527,8 +528,8 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check boxes with block helpers allows access to the current object item in the collection to access extra properties" do
-    with_collection_check_boxes :user, :active, [true, false], :to_s, :to_s do |b|
-      b.label(class: b.object) { b.check_box + b.text }
+    with_collection_check_boxes :user, :active, [true, false], :to_s, :to_s do |box|
+      box.label(class: box.object) { box.check_box + box.text }
     end
 
     assert_select 'label.true[for=user_active_true]', 'true' do
@@ -540,13 +541,13 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "collection check boxes with block helpers does not leak the template" do
-    with_concat_form_for(@user) do |f|
-      collection_input =  f.collection_check_boxes :active, [true, false], :to_s, :to_s do |b|
-        b.label(class: b.object) { b.check_box + b.text }
+    with_concat_form_for(@user) do |form|
+      collection_input =  form.collection_check_boxes :active, [true, false], :to_s, :to_s do |box|
+        box.label(class: box.object) { box.check_box + box.text }
       end
       concat collection_input
 
-      concat f.hidden_field :name
+      concat form.hidden_field :name
     end
 
     assert_select 'label.true[for=user_active_true]', text: 'true', count: 1 do
@@ -559,16 +560,16 @@ class BuilderTest < ActionView::TestCase
 
   # SIMPLE FIELDS
   test "simple fields for is available and yields an instance of FormBuilder" do
-    with_concat_form_for(@user) do |f|
-      f.simple_fields_for(:posts) do |posts_form|
+    with_concat_form_for(@user) do |form|
+      form.simple_fields_for(:posts) do |posts_form|
         assert posts_form.instance_of?(SimpleForm::FormBuilder)
       end
     end
   end
 
   test "fields for with a hash like model yeilds an instance of FormBuilder" do
-    with_concat_form_for(:user) do |f|
-      f.simple_fields_for(:author, HashBackedAuthor.new) do |author|
+    with_concat_form_for(:user) do |form|
+      form.simple_fields_for(:author, HashBackedAuthor.new) do |author|
         assert author.instance_of?(SimpleForm::FormBuilder)
         author.input :name
       end
@@ -578,16 +579,16 @@ class BuilderTest < ActionView::TestCase
   end
 
   test "fields for yields an instance of CustomBuilder if main builder is a CustomBuilder" do
-    with_custom_form_for(:user) do |f|
-      f.simple_fields_for(:company) do |company|
+    with_custom_form_for(:user) do |form|
+      form.simple_fields_for(:company) do |company|
         assert company.instance_of?(CustomFormBuilder)
       end
     end
   end
 
   test "fields for yields an instance of FormBuilder if it was set in options" do
-    with_custom_form_for(:user) do |f|
-      f.simple_fields_for(:company, builder: SimpleForm::FormBuilder) do |company|
+    with_custom_form_for(:user) do |form|
+      form.simple_fields_for(:company, builder: SimpleForm::FormBuilder) do |company|
         assert company.instance_of?(SimpleForm::FormBuilder)
       end
     end
@@ -595,8 +596,8 @@ class BuilderTest < ActionView::TestCase
 
   test "fields inherits wrapper option from the parent form" do
     swap_wrapper :another do
-      simple_form_for(:user, wrapper: :another) do |f|
-        f.simple_fields_for(:company) do |company|
+      simple_form_for(:user, wrapper: :another) do |form|
+        form.simple_fields_for(:company) do |company|
           assert_equal :another, company.options[:wrapper]
         end
       end
@@ -605,8 +606,8 @@ class BuilderTest < ActionView::TestCase
 
   test "fields overrides wrapper option from the parent form" do
     swap_wrapper :another do
-      simple_form_for(:user, wrapper: :another) do |f|
-        f.simple_fields_for(:company, wrapper: false) do |company|
+      simple_form_for(:user, wrapper: :another) do |form|
+        form.simple_fields_for(:company, wrapper: false) do |company|
           assert_equal false, company.options[:wrapper]
         end
       end

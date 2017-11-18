@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Collection Radio Buttons Input Test class
 class CollectionRadioButtonsInputTest < ActionView::TestCase
   setup do
     SimpleForm::Inputs::CollectionRadioButtonsInput.reset_i18n_cache :boolean_collection
@@ -175,8 +176,8 @@ class CollectionRadioButtonsInputTest < ActionView::TestCase
   test 'input allows overriding label and value method using a lambda for collections' do
     with_input_for @user, :name, :radio_buttons,
                           collection: ['Jose', 'Carlos'],
-                          label_method: lambda { |i| i.upcase },
-                          value_method: lambda { |i| i.downcase }
+                          label_method: lambda { |item| item.upcase },
+                          value_method: lambda { |item| item.downcase }
     assert_select 'input[type=radio][value=jose]'
     assert_select 'input[type=radio][value=carlos]'
     assert_select 'label.collection_radio_buttons', 'JOSE'
@@ -404,8 +405,8 @@ class CollectionRadioButtonsInputTest < ActionView::TestCase
 
   test 'input radio with nested style and namespace uses the right for attribute' do
     swap SimpleForm, include_default_input_wrapper_class: false, boolean_style: :nested do
-      with_concat_form_for @user, namespace: :foo do |f|
-        concat f.input :gender, as: :radio_buttons, collection: [:male, :female]
+      with_concat_form_for @user, namespace: :foo do |form|
+        concat form.input :gender, as: :radio_buttons, collection: [:male, :female]
       end
 
       assert_select 'label[for=foo_user_gender_male]'
@@ -415,8 +416,8 @@ class CollectionRadioButtonsInputTest < ActionView::TestCase
 
   test 'input radio with nested style and index uses the right for attribute' do
     swap SimpleForm, include_default_input_wrapper_class: false, boolean_style: :nested do
-      with_concat_form_for @user, index: 1 do |f|
-        concat f.input :gender, as: :radio_buttons, collection: [:male, :female]
+      with_concat_form_for @user, index: 1 do |form|
+        concat form.input :gender, as: :radio_buttons, collection: [:male, :female]
       end
 
       assert_select 'label[for=user_1_gender_male]'

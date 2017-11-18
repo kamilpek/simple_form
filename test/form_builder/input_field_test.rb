@@ -3,8 +3,8 @@ require 'test_helper'
 # Tests for f.input_field
 class InputFieldTest < ActionView::TestCase
   def with_input_field_for(object, *args)
-    with_concat_form_for(object) do |f|
-      f.input_field(*args)
+    with_concat_form_for(object) do |form|
+      form.input_field(*args)
     end
   end
 

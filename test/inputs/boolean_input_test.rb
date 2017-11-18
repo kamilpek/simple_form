@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Boolean Input Test class
 class BooleanInputTest < ActionView::TestCase
   test 'input generates a checkbox by default for boolean attributes' do
     with_input_for @user, :active, :boolean

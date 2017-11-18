@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# Simple Form Generator Test class
 class SimpleFormGeneratorTest < Rails::Generators::TestCase
   tests SimpleForm::Generators::InstallGenerator
   destination File.expand_path('../../tmp', __FILE__)

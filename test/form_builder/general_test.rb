@@ -1,31 +1,32 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Form Builder Test class
 class FormBuilderTest < ActionView::TestCase
   def with_custom_form_for(object, *args, &block)
-    with_concat_custom_form_for(object) do |f|
-      f.input(*args, &block)
+    with_concat_custom_form_for(object) do |form|
+      form.input(*args, &block)
     end
   end
 
   test 'nested simple fields yields an instance of FormBuilder' do
-    simple_form_for :user do |f|
-      f.simple_fields_for :posts do |posts_form|
+    simple_form_for :user do |form|
+      form.simple_fields_for :posts do |posts_form|
         assert posts_form.instance_of?(SimpleForm::FormBuilder)
       end
     end
   end
 
   test 'builder input is html safe' do
-    simple_form_for @user do |f|
-      assert f.input(:name).html_safe?
+    simple_form_for @user do |form|
+      assert form.input(:name).html_safe?
     end
   end
 
   test 'builder works without controller' do
     stub_any_instance ActionView::TestCase, :controller, nil do
-      simple_form_for @user do |f|
-        assert f.input(:name)
+      simple_form_for @user do |form|
+        assert form.input(:name)
       end
     end
   end
@@ -48,8 +49,8 @@ class FormBuilderTest < ActionView::TestCase
 
   test 'builder does not override custom input mappings for custom collection' do
     swap SimpleForm, input_mappings: { /gender$/ => :check_boxes } do
-      with_concat_form_for @user do |f|
-        f.input :gender, collection: [:male, :female]
+      with_concat_form_for @user do |form|
+        form.input :gender, collection: [:male, :female]
       end
 
       assert_no_select 'select option', 'Male'
@@ -101,8 +102,8 @@ class FormBuilderTest < ActionView::TestCase
   test 'builder allow to use numbers in the model name' do
     user = UserNumber1And2.build(tags: [Tag.new(nil, 'Tag1')])
 
-    with_concat_form_for(user, url: '/') do |f|
-      f.simple_fields_for(:tags) do |tags|
+    with_concat_form_for(user, url: '/') do |form|
+      form.simple_fields_for(:tags) do |tags|
         tags.input :name
       end
     end
@@ -384,16 +385,16 @@ class FormBuilderTest < ActionView::TestCase
   # DEFAULT OPTIONS
   [:input, :input_field].each do |method|
     test "builder receives a default argument and pass it to the inputs when calling '#{method}'" do
-      with_concat_form_for @user, defaults: { input_html: { class: 'default_class' } } do |f|
-        f.public_send(method, :name)
+      with_concat_form_for @user, defaults: { input_html: { class: 'default_class' } } do |form|
+        form.public_send(method, :name)
       end
       assert_select 'input.default_class'
     end
 
     test "builder receives a default argument and pass it to the inputs without changing the defaults when calling '#{method}'" do
-      with_concat_form_for @user, defaults: { input_html: { class: 'default_class', id: 'default_id' } } do |f|
-        concat(f.public_send(method, :name))
-        concat(f.public_send(method, :credit_limit))
+      with_concat_form_for @user, defaults: { input_html: { class: 'default_class', id: 'default_id' } } do |form|
+        concat(form.public_send(method, :name))
+        concat(form.public_send(method, :credit_limit))
       end
 
       assert_select "input.string.default_class[name='user[name]']"
@@ -403,9 +404,9 @@ class FormBuilderTest < ActionView::TestCase
     test "builder receives a default argument and pass it to the inputs and nested form when calling '#{method}'" do
       @user.company = Company.new(1, 'Empresa')
 
-      with_concat_form_for @user, defaults: { input_html: { class: 'default_class' } } do |f|
-        concat(f.public_send(method, :name))
-        concat(f.simple_fields_for(:company) do |company_form|
+      with_concat_form_for @user, defaults: { input_html: { class: 'default_class' } } do |form|
+        concat(form.public_send(method, :name))
+        concat(form.simple_fields_for(:company) do |company_form|
           concat(company_form.public_send(method, :name))
         end)
       end
@@ -416,29 +417,29 @@ class FormBuilderTest < ActionView::TestCase
   end
 
   test "builder receives a default argument and pass it to the inputs when calling 'input', respecting the specific options" do
-    with_concat_form_for @user, defaults: { input_html: { class: 'default_class' } } do |f|
-      f.input :name, input_html: { id: 'specific_id' }
+    with_concat_form_for @user, defaults: { input_html: { class: 'default_class' } } do |form|
+      form.input :name, input_html: { id: 'specific_id' }
     end
     assert_select 'input.default_class#specific_id'
   end
 
   test "builder receives a default argument and pass it to the inputs when calling 'input_field', respecting the specific options" do
-    with_concat_form_for @user, defaults: { input_html: { class: 'default_class' } } do |f|
-      f.input_field :name, id: 'specific_id'
+    with_concat_form_for @user, defaults: { input_html: { class: 'default_class' } } do |form|
+      form.input_field :name, id: 'specific_id'
     end
     assert_select 'input.default_class#specific_id'
   end
 
   test "builder receives a default argument and pass it to the inputs when calling 'input', overwriting the defaults with specific options" do
-    with_concat_form_for @user, defaults: { input_html: { class: 'default_class', id: 'default_id' } } do |f|
-      f.input :name, input_html: { id: 'specific_id' }
+    with_concat_form_for @user, defaults: { input_html: { class: 'default_class', id: 'default_id' } } do |form|
+      form.input :name, input_html: { id: 'specific_id' }
     end
     assert_select 'input.default_class#specific_id'
   end
 
   test "builder receives a default argument and pass it to the inputs when calling 'input_field', overwriting the defaults with specific options" do
-    with_concat_form_for @user, defaults: { input_html: { class: 'default_class', id: 'default_id' } } do |f|
-      f.input_field :name, id: 'specific_id'
+    with_concat_form_for @user, defaults: { input_html: { class: 'default_class', id: 'default_id' } } do |form|
+      form.input_field :name, id: 'specific_id'
     end
     assert_select 'input.default_class#specific_id'
   end

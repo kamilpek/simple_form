@@ -14,36 +14,37 @@ akapitu.
 
 ### Code Smells Table
 
-[cols="^5,5,20,30,40", options="header", caption=""]
+[cols="^5,5,5,15,30,40", options="header", caption=""]
 |===
-| 1st ^| 2nd | Code Smell ^| Opis ^| Refactorings
-| 94 | 54 | https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md[IrresponsibleModule] | Brak komentarzy |
-| 72 | 62 | https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md[UncommunicativeVariableName] | Słaba nazwa |
-| 48 | 48 | https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md[DuplicateMethodCall] | Powtórzenie | Extract Method
-| 43 | 43 | https://github.com/troessner/reek/blob/master/docs/Utility-Function.md[UtilityFunction] | Niezależność od stanu | Extract Method, Move Method
-| 39 | 39 | https://github.com/troessner/reek/blob/master/docs/Attribute.md[Attribute] | Klasa jako atrybut |
-| 35 | 35 | https://github.com/troessner/reek/blob/master/docs/Class-Variable.md[ClassVariable] | Zmienna w klasie |
-| 29 | 29 | https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md[TooManyStatements] | Kod Spaghetti |
-| 21 | 21 | https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md[UnusedParameters] | Nieużywane parametry |
-| 20 | 20 | https://github.com/troessner/reek/blob/master/docs/Manual-Dispatch.md[ManualDispatch] | Ręczne sprawdzanie |
-| 19 | 19 | https://github.com/troessner/reek/blob/master/docs/Feature-Envy.md[FeatureEnvy] | Zazdrość funkcjonalności | Extract Method, Move Method
-| 18 | 18 | https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md[InstanceVariableAssumption] | Złe założenia |
-|  7 |  4 | https://github.com/troessner/reek/blob/master/docs/Nil-Check.md[NilCheck] | Sprawdzanie zera |
-|  6 |  6 | https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md[LongParameterList] | Dużo parametrów | Replace Parameter with Method Call, Preserve Whole Object, Introduce Parameter Object
-|  5 |  5 | https://github.com/troessner/reek/blob/master/docs/Control-Parameter.md[ControlParameter] | Parametr kontrolny |
-|  5 |  5 | https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md[NestedIterators] | Zagnieżdżenia |
-|  2 |  2 | https://github.com/troessner/reek/blob/master/docs/Prima-Donna-Method.md[PrimaDonnaMethod] | |
-|  2 |  2 | https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Module-Name.md[UncommunicativeModuleName] | |
-|  2 |  2 | https://github.com/troessner/reek/blob/master/docs/Data-Clump.md[DataClump] | Kłęby danych | Extract Class, Introduce Parameter Object, Preserve Whole Object
-|  1 |  1 | https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md[BooleanParameter] | Binarny paramter |
-|  1 |  1 | https://github.com/troessner/reek/blob/master/docs/Long-Yield-List.md[LongYieldList] | |
-|  1 |  1 | https://github.com/troessner/reek/blob/master/docs/Module-Initialize.md[ModuleInitialize] |  |
-|532 |417 | RAZEM | |
+| 1st ^| 2nd | 3rd | Code Smell ^| Opis ^| Refactorings
+| 94 | 54 |  5 | https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md[IrresponsibleModule] | Brak komentarzy |
+| 72 | 62 |  5 | https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md[UncommunicativeVariableName] | Słaba nazwa |
+| 48 | 48 | 48 | https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md[DuplicateMethodCall] | Powtórzenie | Extract Method
+| 43 | 43 | 42 | https://github.com/troessner/reek/blob/master/docs/Utility-Function.md[UtilityFunction] | Niezależność od stanu | Extract Method, Move Method
+| 39 | 39 | 39 | https://github.com/troessner/reek/blob/master/docs/Attribute.md[Attribute] | Klasa jako atrybut |
+| 35 | 35 | 35 | https://github.com/troessner/reek/blob/master/docs/Class-Variable.md[ClassVariable] | Zmienna w klasie |
+| 29 | 29 | 29 | https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md[TooManyStatements] | Kod Spaghetti |
+| 21 | 21 | 21 | https://github.com/troessner/reek/blob/master/docs/Unused-Parameters.md[UnusedParameters] | Nieużywane parametry |
+| 20 | 20 | 20 | https://github.com/troessner/reek/blob/master/docs/Manual-Dispatch.md[ManualDispatch] | Ręczne sprawdzanie |
+| 19 | 19 | 19 | https://github.com/troessner/reek/blob/master/docs/Feature-Envy.md[FeatureEnvy] | Zazdrość funkcjonalności | Extract Method, Move Method
+| 18 | 18 | 18 | https://github.com/troessner/reek/blob/master/docs/Instance-Variable-Assumption.md[InstanceVariableAssumption] | Złe założenia |
+|  7 |  4 |  4 | https://github.com/troessner/reek/blob/master/docs/Nil-Check.md[NilCheck] | Sprawdzanie zera |
+|  6 |  6 |  6 | https://github.com/troessner/reek/blob/master/docs/Long-Parameter-List.md[LongParameterList] | Dużo parametrów | Replace Parameter with Method Call, Preserve Whole Object, Introduce Parameter Object
+|  5 |  5 |  5 | https://github.com/troessner/reek/blob/master/docs/Control-Parameter.md[ControlParameter] | Parametr kontrolny |
+|  5 |  5 |  5 | https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md[NestedIterators] | Zagnieżdżenia |
+|  2 |  2 |  2 | https://github.com/troessner/reek/blob/master/docs/Prima-Donna-Method.md[PrimaDonnaMethod] | |
+|  2 |  2 |  2 | https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Module-Name.md[UncommunicativeModuleName] | Słaba nazwa |
+|  2 |  2 |  2 | https://github.com/troessner/reek/blob/master/docs/Data-Clump.md[DataClump] | Kłęby danych | Extract Class, Introduce Parameter Object, Preserve Whole Object
+|  1 |  1 |  1 | https://github.com/troessner/reek/blob/master/docs/Boolean-Parameter.md[BooleanParameter] | Binarny paramter |
+|  1 |  1 |  1 | https://github.com/troessner/reek/blob/master/docs/Long-Yield-List.md[LongYieldList] | Długa lista |
+|  1 |  1 |  1 | https://github.com/troessner/reek/blob/master/docs/Module-Initialize.md[ModuleInitialize] | Konstruktor modułu |
+|532 |417 |310 | RAZEM | |
 |===
 
 .Legenda do tabeli
 * 1st – pierwsze skanowanie reek – przed refaktoryzacją
-* 2st – drugie skanowanie reek – po refaktoryzacji
+* 2st – drugie skanowanie reek – po pierwszej refaktoryzacji
+* 3rd – trzecie skanowanie reek – po drugiej refaktoryzacji
 * Code Smell – nazwa zapachu
 * Opis – kórtki opis zapachu
 * Refactorings – zalecane metody refaktoringu
@@ -54,29 +55,37 @@ akapitu.
 * YAML – 2 file, 0 blank lines, 22 comments lines, 64 code lines,
 * SUM – 94 files, 1657 blank lines, 742 comments lines, 7592 code lines,
 
-### Struktura plików po rekatoryzacją [cloc]
+### Struktura plików po pierwszej refaktoryzacji [cloc]
 * 115 text files – 114 unique files.
 * Ruby – 92 files, 1657 blank lines, 760 comments lines, 7528 code lines,
 * YAML – 2 file, 0 blank lines, 22 comments lines, 64 code lines,
 * SUM – 94 files, 1657 blank lines, 782 comments lines, 7592 code lines,
 
+### Struktura plików po drugiej refaktoryzacji [cloc]
+* 115 text files – 114 unique files.
+* Ruby – 92 files, 1658 blank lines, 809 comments lines, 7528 code lines,
+* YAML – 2 file, 0 blank lines, 22 comments lines, 64 code lines,
+* SUM – 94 files, 1658 blank lines, 831 comments lines, 7592 code lines,
+
 ### Testy
-[cols="^10,10,70", options="header", caption=""]
+[cols="^10,10,10,60", options="header", caption=""]
 |===
-| 1st ^| 2nd  | Opis
-| 749  | 749  | przeprowadzonych testów
-| 1326 | 1326 | asercji
-| 0    | 0    | niepowodzeń
-| 0    | 0    | błędów
-| 1    | 1    | pominięcie
+| 1st ^| 2nd  | 3rd  | Opis
+| 749  | 749  | 749  | przeprowadzonych testów
+| 1326 | 1326 | 1326 | asercji
+| 0    | 0    | 0    | niepowodzeń
+| 0    | 0    | 0    | błędów
+| 1    | 1    | 1    | pominięcie
 |===
 
 .Legenda do tabeli
 * 1st – pierwsze testy – przed refaktoryzacją
-* 2st – drugie build – po refaktoryzacji
+* 2st – drugie testy – po pierwszej refaktoryzacji
+* 3rd – trzecie testy – po drugiej refaktoryzacji
 * Opis – opis parametru
 
 
 ### Podsumowanie
-Podczas pierwszej refaktoryzacji udało się zredukować ilość zapachów o 22%.
-Po zakończeniu operacji stosunek zapachów do linii kodu wynosi 5,49%.
+* Podczas pierwszej refaktoryzacji udało się zredukować ilość zapachów o 22%.
+* Druga refaktoryzacja przyniosła efekty w postaci redukcji zapachód o kolejne 25%.
+* Po zakończeniu wszystkich operacji stosunek zapachów do linii kodu wynosi 4,11%.

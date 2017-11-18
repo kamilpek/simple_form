@@ -1,3 +1,4 @@
+# misc helper module
 module MiscHelpers
   def store_translations(locale, translations, &block)
     I18n.backend.store_translations locale, translations
@@ -55,78 +56,78 @@ module MiscHelpers
   end
 
   def custom_wrapper
-    SimpleForm.build tag: :section, class: "custom_wrapper", pattern: false do |b|
-      b.use :pattern
-      b.wrapper :another, class: "another_wrapper" do |ba|
-        ba.use :label
-        ba.use :input
+    SimpleForm.build tag: :section, class: "custom_wrapper", pattern: false do |build|
+      build.use :pattern
+      build.wrapper :another, class: "another_wrapper" do |build_another|
+        build_another.use :label
+        build_another.use :input
       end
-      b.wrapper :error_wrapper, tag: :div, class: "error_wrapper" do |be|
-        be.use :error, wrap_with: { tag: :span, class: "omg_error" }
+      build.wrapper :error_wrapper, tag: :div, class: "error_wrapper" do |build_error|
+        build_error.use :error, wrap_with: { tag: :span, class: "omg_error" }
       end
-      b.use :hint, wrap_with: { class: "omg_hint" }
+      build.use :hint, wrap_with: { class: "omg_hint" }
     end
   end
 
   def custom_wrapper_with_wrapped_optional_component
-    SimpleForm.build tag: :section, class: "custom_wrapper" do |b|
-      b.wrapper tag: :div, class: 'no_output_wrapper' do |ba|
-        ba.optional :hint, wrap_with: { tag: :p, class: 'omg_hint' }
+    SimpleForm.build tag: :section, class: "custom_wrapper" do |build|
+      build.wrapper tag: :div, class: 'no_output_wrapper' do |build_a|
+        build_a.optional :hint, wrap_with: { tag: :p, class: 'omg_hint' }
       end
     end
   end
 
   def custom_wrapper_with_unless_blank
-    SimpleForm.build tag: :section, class: "custom_wrapper" do |b|
-      b.wrapper tag: :div, class: 'no_output_wrapper', unless_blank: true do |ba|
-        ba.optional :hint, wrap_with: { tag: :p, class: 'omg_hint' }
+    SimpleForm.build tag: :section, class: "custom_wrapper" do |build|
+      build.wrapper tag: :div, class: 'no_output_wrapper', unless_blank: true do |build_a|
+        build_a.optional :hint, wrap_with: { tag: :p, class: 'omg_hint' }
       end
     end
   end
 
   def custom_wrapper_with_input_class
-    SimpleForm.build tag: :div, class: "custom_wrapper" do |b|
-      b.use :label
-      b.use :input, class: 'inline-class'
+    SimpleForm.build tag: :div, class: "custom_wrapper" do |build|
+      build.use :label
+      build.use :input, class: 'inline-class'
     end
   end
 
   def custom_wrapper_with_input_data_modal
-    SimpleForm.build tag: :div, class: "custom_wrapper" do |b|
-      b.use :label
-      b.use :input, data: { modal: 'data-modal', wrapper: 'data-wrapper' }
+    SimpleForm.build tag: :div, class: "custom_wrapper" do |build|
+      build.use :label
+      build.use :input, data: { modal: 'data-modal', wrapper: 'data-wrapper' }
     end
   end
 
   def custom_wrapper_with_input_aria_modal
-    SimpleForm.build tag: :div, class: "custom_wrapper" do |b|
+    SimpleForm.build tag: :div, class: "custom_wrapper" do |build|
       b.use :label
       b.use :input, aria: { modal: 'aria-modal', wrapper: 'aria-wrapper' }
     end
   end
 
   def custom_wrapper_with_label_class
-    SimpleForm.build tag: :div, class: "custom_wrapper" do |b|
-      b.use :label, class: 'inline-class'
-      b.use :input
+    SimpleForm.build tag: :div, class: "custom_wrapper" do |build|
+      build.use :label, class: 'inline-class'
+      build.use :input
     end
   end
 
   def custom_wrapper_with_input_attributes
-    SimpleForm.build tag: :div, class: "custom_wrapper" do |b|
-      b.use :input, data: { modal: true }
+    SimpleForm.build tag: :div, class: "custom_wrapper" do |build|
+      build.use :input, data: { modal: true }
     end
   end
 
   def custom_wrapper_with_label_input_class
-    SimpleForm.build tag: :div, class: "custom_wrapper" do |b|
-      b.use :label_input, class: 'inline-class'
+    SimpleForm.build tag: :div, class: "custom_wrapper" do |build|
+      build.use :label_input, class: 'inline-class'
     end
   end
 
   def custom_wrapper_with_wrapped_input
-    SimpleForm.build tag: :div, class: "custom_wrapper" do |b|
-      b.wrapper tag: :div, class: 'elem' do |component|
+    SimpleForm.build tag: :div, class: "custom_wrapper" do |build|
+      build.wrapper tag: :div, class: 'elem' do |component|
         component.use :label
         component.use :input, wrap_with: { tag: :div, class: 'input' }
       end
@@ -134,8 +135,8 @@ module MiscHelpers
   end
 
   def custom_wrapper_with_wrapped_label
-    SimpleForm.build tag: :div, class: "custom_wrapper" do |b|
-      b.wrapper tag: :div, class: 'elem' do |component|
+    SimpleForm.build tag: :div, class: "custom_wrapper" do |build|
+      build.wrapper tag: :div, class: 'elem' do |component|
         component.use :label, wrap_with: { tag: :div, class: 'label' }
         component.use :input
       end
@@ -143,65 +144,65 @@ module MiscHelpers
   end
 
   def custom_wrapper_without_top_level
-    SimpleForm.build tag: false, class: 'custom_wrapper_without_top_level' do |b|
-      b.use :label_input
-      b.use :hint,  wrap_with: { tag: :span, class: :hint }
-      b.use :error, wrap_with: { tag: :span, class: :error }
+    SimpleForm.build tag: false, class: 'custom_wrapper_without_top_level' do |build|
+      build.use :label_input
+      build.use :hint,  wrap_with: { tag: :span, class: :hint }
+      build.use :error, wrap_with: { tag: :span, class: :error }
     end
   end
 
   def custom_wrapper_without_class
-    SimpleForm.build tag: :div, wrapper_html: { id: 'custom_wrapper_without_class' } do |b|
-      b.use :label_input
+    SimpleForm.build tag: :div, wrapper_html: { id: 'custom_wrapper_without_class' } do |build|
+      build.use :label_input
     end
   end
 
   def custom_wrapper_with_label_html_option
-    SimpleForm.build tag: :div, class: "custom_wrapper", label_html: { class: 'extra-label-class' } do |b|
-      b.use :label_input
+    SimpleForm.build tag: :div, class: "custom_wrapper", label_html: { class: 'extra-label-class' } do |build|
+      build.use :label_input
     end
   end
 
   def custom_wrapper_with_wrapped_label_input
-    SimpleForm.build tag: :section, class: "custom_wrapper", pattern: false do |b|
-      b.use :label_input, wrap_with: { tag: :div, class: :field }
+    SimpleForm.build tag: :section, class: "custom_wrapper", pattern: false do |build|
+      build.use :label_input, wrap_with: { tag: :div, class: :field }
     end
   end
 
   def custom_wrapper_with_additional_attributes
-    SimpleForm.build tag: :div, class: 'custom_wrapper', html: { data: { wrapper: :test }, title: 'some title' } do |b|
-      b.use :label_input
+    SimpleForm.build tag: :div, class: 'custom_wrapper', html: { data: { wrapper: :test }, title: 'some title' } do |build|
+      build.use :label_input
     end
   end
 
   def custom_wrapper_with_full_error
-    SimpleForm.build tag: :div, class: 'custom_wrapper' do |b|
-      b.use :full_error,  wrap_with: { tag: :span, class: :error }
+    SimpleForm.build tag: :div, class: 'custom_wrapper' do |build|
+      build.use :full_error,  wrap_with: { tag: :span, class: :error }
     end
   end
 
   def custom_wrapper_with_label_text
-    SimpleForm.build :label_text => proc { |label, required| "**#{label}**" } do |b|
-      b.use :label_input
+    SimpleForm.build :label_text => proc { |label, required| "**#{label}**" } do |build|
+      build.use :label_input
     end
   end
 
   def custom_wrapper_with_custom_label_component
-    SimpleForm.build tag: :span, class: 'custom_wrapper' do |b|
-      b.use :label_text
+    SimpleForm.build tag: :span, class: 'custom_wrapper' do |build|
+      build.use :label_text
     end
   end
 
   def custom_wrapper_with_html5_components
-    SimpleForm.build tag: :span, class: 'custom_wrapper' do |b|
-      b.use :label_text
+    SimpleForm.build tag: :span, class: 'custom_wrapper' do |build|
+      build.use :label_text
     end
   end
 
   def custom_wrapper_with_required_input
-    SimpleForm.build tag: :span, class: 'custom_wrapper' do |b|
-      b.use :html5
-      b.use :input, required: true
+    SimpleForm.build tag: :span, class: 'custom_wrapper' do |build|
+      build.use :html5
+      build.use :input, required: true
     end
   end
 
@@ -230,24 +231,26 @@ module MiscHelpers
   end
 
   def with_form_for(object, *args, &block)
-    with_concat_form_for(object) do |f|
-      f.input(*args, &block)
+    with_concat_form_for(object) do |form|
+      form.input(*args, &block)
     end
   end
 
   def with_input_for(object, attribute_name, type, options = {})
-    with_concat_form_for(object) do |f|
-      f.input(attribute_name, options.merge(as: type))
+    with_concat_form_for(object) do |form|
+      form.input(attribute_name, options.merge(as: type))
     end
   end
 end
 
+# Custom Form Builder class
 class CustomFormBuilder < SimpleForm::FormBuilder
   def input(attribute_name, *args, &block)
     super(attribute_name, *args, { input_html: { class: 'custom' } }, &block)
   end
 end
 
+# Custom Map Type Form Builder class
 class CustomMapTypeFormBuilder < SimpleForm::FormBuilder
   map_type :custom_type, to: SimpleForm::Inputs::StringInput
 end

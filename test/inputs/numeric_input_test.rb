@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Numeric Input Test class
 class NumericInputTest < ActionView::TestCase
   test 'input generates an integer text field for integer attributes ' do
     with_input_for @user, :age, :integer

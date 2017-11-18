@@ -8,9 +8,9 @@ class IsolatedLabelTest < ActionView::TestCase
   end
 
   def with_label_for(object, attribute_name, type, options = {})
-    with_concat_form_for(object) do |f|
+    with_concat_form_for(object) do |form|
       options[:reflection] = Association.new(Company, :company, {}) if options.delete(:setup_association)
-      SimpleForm::Inputs::Base.new(f, attribute_name, nil, type, options).label
+      SimpleForm::Inputs::Base.new(form, attribute_name, nil, type, options).label
     end
   end
 
@@ -113,9 +113,9 @@ class IsolatedLabelTest < ActionView::TestCase
     store_translations(:en, simple_form: { labels: {
       user: { name: 'Usuario', company: { name: 'Nome da empresa' } }
     } }) do
-      with_concat_form_for @user do |f|
-        concat f.input :name
-        concat(f.simple_fields_for(:company) do |company_form|
+      with_concat_form_for @user do |form|
+        concat form.input :name
+        concat(form.simple_fields_for(:company) do |company_form|
           concat(company_form.input :name)
         end)
       end
@@ -132,9 +132,9 @@ class IsolatedLabelTest < ActionView::TestCase
       user: { name: 'Usuario' },
       company: { name: 'Nome da empresa' }
     } }) do
-      with_concat_form_for @user do |f|
-        concat f.input :name
-        concat(f.simple_fields_for(:company) do |company_form|
+      with_concat_form_for @user do |form|
+        concat form.input :name
+        concat(form.simple_fields_for(:company) do |company_form|
           concat(company_form.input :name)
         end)
       end
@@ -151,9 +151,9 @@ class IsolatedLabelTest < ActionView::TestCase
       user: { name: 'Usuario' },
       tags: { name: 'Nome da empresa' }
     } }) do
-      with_concat_form_for @user do |f|
-        concat f.input :name
-        concat(f.simple_fields_for(:tags, child_index: "new_index") do |tags_form|
+      with_concat_form_for @user do |form|
+        concat form.input :name
+        concat(form.simple_fields_for(:tags, child_index: "new_index") do |tags_form|
           concat(tags_form.input :name)
         end)
       end

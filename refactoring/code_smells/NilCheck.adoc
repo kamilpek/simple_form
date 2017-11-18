@@ -25,15 +25,17 @@ def wrapper(name, options = nil)
   else
     raise ArgumentError, "A block is required as argument to wrapper"
   end
-end```
+end
+```
+
 .Step 1
 Remove suffix ".nil?" from condition.
 ```ruby
-options[:wrapper] = self.options[:wrapper] if options[:wrapper]
+options[:tag] = :div if options[:tag]
 ```
 
 .Step 2
 Change "if" to "unless".
 ```ruby
-options[:wrapper] = self.options[:wrapper] unless options[:wrapper]
+options[:tag] = :div unless options[:tag]
 ```

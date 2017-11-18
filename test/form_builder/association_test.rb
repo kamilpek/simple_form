@@ -1,10 +1,11 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# Association Test class
 class AssociationTest < ActionView::TestCase
   def with_association_for(object, *args)
-    with_concat_form_for(object) do |f|
-      f.association(*args)
+    with_concat_form_for(object) do |form|
+      form.association(*args)
     end
   end
 
@@ -15,8 +16,8 @@ class AssociationTest < ActionView::TestCase
   end
 
   test 'builder association with a block calls simple_fields_for' do
-    simple_form_for @user do |f|
-      f.association :posts do |posts_form|
+    simple_form_for @user do |form|
+      form.association :posts do |posts_form|
         assert posts_form.instance_of?(SimpleForm::FormBuilder)
       end
     end
@@ -24,8 +25,8 @@ class AssociationTest < ActionView::TestCase
 
   test 'builder association forwards collection to simple_fields_for' do
     calls = 0
-    simple_form_for @user do |f|
-      f.association :company, collection: Company.all do |c|
+    simple_form_for @user do |form|
+      form.association :company, collection: Company.all do |company|
         calls += 1
       end
     end

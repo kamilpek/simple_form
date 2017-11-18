@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'test_helper'
 
+# String Input Test class
 class StringInputTest < ActionView::TestCase
   test 'input maps text field to string attribute' do
     with_input_for @user, :name, :string

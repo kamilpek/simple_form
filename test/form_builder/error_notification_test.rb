@@ -4,8 +4,8 @@ require 'test_helper'
 # Tests for f.error_notification
 class ErrorNotificationTest < ActionView::TestCase
   def with_error_notification_for(object, options = {}, &block)
-    with_concat_form_for(object) do |f|
-      f.error_notification(options)
+    with_concat_form_for(object) do |form|
+      form.error_notification(options)
     end
   end
 

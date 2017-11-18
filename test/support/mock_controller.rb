@@ -1,3 +1,4 @@
+# Mock Controller class
 class MockController
   attr_writer :action_name
 
