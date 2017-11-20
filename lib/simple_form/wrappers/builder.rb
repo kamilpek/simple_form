@@ -60,11 +60,9 @@ module SimpleForm
 
       def wrapper(name, options = nil)
         if block_given?
-          name, options = nil, name if name.is_a?(Hash)
-          builder = self.class.new(@options)
-          options ||= {}
+          name, options = nil, name if name.is_a?(Hash)          
           options[:tag] = :div unless options[:tag]
-          yield builder
+          yield builder = self.class.new(@options)
           @components << Many.new(name, builder.to_a, options)
         else
           raise ArgumentError, "A block is required as argument to wrapper"

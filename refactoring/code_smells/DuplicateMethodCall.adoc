@@ -1,0 +1,45 @@
+# Duplicate Method Call
+:source-highlighter: pygments
+:pygments-style: pastie
+:icons: font
+:experimental:
+:toc!:
+
+## https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md[Why and How?]
+
+## How to Refactor (Ruby Edition)
+* Add variable "html_options"
+* Assign "options[:html]" to variable
+
+## Example
+
+```ruby
+def simple_form_for(record, options = {}, &block)
+  options[:builder] ||= SimpleForm::FormBuilder
+  options[:html] ||= {}
+  unless options[:html].key?(:novalidate)
+    options[:html][:novalidate] = !SimpleForm.browser_validations
+  end
+  if options[:html].key?(:class)
+    options[:html][:class] = [SimpleForm.form_class, options[:html][:class]].compact
+  else
+    options[:html][:class] = [SimpleForm.form_class, SimpleForm.default_form_class, simple_form_css_class(record, options)].compact
+  end
+
+  with_simple_form_field_error_proc do
+    form_for(record, options, &block)
+  end
+end
+```
+
+.Step 1
+Declare variable.
+```ruby
+html_options = options[:html] ||= {}
+```
+
+.Step 2
+Changes in code.
+```ruby
+html_options[:class] = [SimpleForm.form_class, html_options[:class]].compact
+```

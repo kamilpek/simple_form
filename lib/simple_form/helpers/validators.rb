@@ -21,13 +21,15 @@ module SimpleForm
       end
 
       def conditional_validators?(validator)
-        validator.options.include?(:if) || validator.options.include?(:unless)
+        val = validator.options
+        val.include?(:if) || val.include?(:unless)
       end
 
       def action_validator_match?(validator)
-        return true if !validator.options.include?(:on)
+        val = validator.options
+        return true if !val.include?(:on)
 
-        case validator.options[:on]
+        case val[:on]
         when :save
           true
         when :create

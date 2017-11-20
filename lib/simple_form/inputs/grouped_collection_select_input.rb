@@ -16,8 +16,8 @@ module SimpleForm
 
       def grouped_collection
         @grouped_collection ||= begin
-          grouped_collection = options.delete(:collection)
-          grouped_collection.respond_to?(:call) ? grouped_collection.call : grouped_collection.to_a
+          gc = grouped_collection = options.delete(:collection)
+          gc.respond_to?(:call) ? grouped_collection.call : grouped_collection.to_a
         end
       end
 
@@ -44,10 +44,10 @@ module SimpleForm
       def detect_method_from_class(collection_classes)
         return {} if collection_classes.empty?
 
-        sample = collection_classes.first
+        sample = collection_classes.first.instance_methods
 
-        { label: SimpleForm.collection_label_methods.find { |method| sample.instance_methods.include?(method) },
-          value: SimpleForm.collection_value_methods.find { |method| sample.instance_methods.include?(method) } }
+        { label: SimpleForm.collection_label_methods.find { |method| sample.include?(method) },
+          value: SimpleForm.collection_value_methods.find { |method| sample.include?(method) } }
       end
     end
   end

@@ -279,8 +279,7 @@ module SimpleForm
         input_type  = default_input_type(attribute_name, column, options)
       end
 
-      wrapper.find(:hint).
-        render(SimpleForm::Inputs::Base.new(self, attribute_name, column, input_type, options))
+      wrapper.find(:hint).render(SimpleForm::Inputs::Base.new(self, attribute_name, column, input_type, options))
     end
 
     # Creates a default label tag for the given attribute. You can give a label
@@ -477,9 +476,10 @@ module SimpleForm
     end
 
     def build_association_attribute(reflection, association, options)
+      ref_name = reflection.name
       case reflection.macro
       when :belongs_to
-        (reflection.respond_to?(:options) && reflection.options[:foreign_key]) || :"#{reflection.name}_id"
+        (reflection.respond_to?(:options) && reflection.options[:foreign_key]) || :"#{ref_name}_id"
       when :has_one
         raise ArgumentError, ":has_one associations are not supported by f.association"
       else
@@ -494,7 +494,7 @@ module SimpleForm
           target.to_a if target.respond_to?(:to_a)
         end
 
-        :"#{reflection.name.to_s.singularize}_ids"
+        :"#{ref_name.to_s.singularize}_ids"
       end
     end
 
@@ -514,7 +514,9 @@ module SimpleForm
     # default always fallback to the user :as option, or to a :select when a
     # collection is given.
     def default_input_type(attribute_name, column, options)
-      return options[:as].to_sym if options[:as]
+      atr_name = attribute_name
+      opt = options
+      return opt[:as].to_sym if opt[:as]
       custom_type = find_custom_type(attribute_name.to_s) and return custom_type
       return :select             if options[:collection]
 
@@ -523,7 +525,7 @@ module SimpleForm
       when :timestamp
         :datetime
       when :string, nil
-        case attribute_name.to_s
+        case atr_name.to_s
         when /password/  then :password
         when /time_zone/ then :time_zone
         when /country/   then :country
@@ -546,7 +548,7 @@ module SimpleForm
 
     def file_method?(attribute_name)
       file = @object.send(attribute_name) if @object.respond_to?(attribute_name)
-      file && SimpleForm.file_methods.any? { |m| file.respond_to?(m) }
+      file && SimpleForm.file_methods.any? { |method| file.respond_to?(method) }
     end
 
     def find_attribute_column(attribute_name)
@@ -627,8 +629,8 @@ module SimpleForm
 
       begin
         at.const_get(mapping)
-      rescue NameError => e
-        raise if e.message !~ /#{mapping}$/
+      rescue NameError => error
+        raise if error.message !~ /#{mapping}$/
       end
     end
 

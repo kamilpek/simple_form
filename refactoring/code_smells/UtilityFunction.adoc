@@ -1,0 +1,55 @@
+# Utility Function
+:source-highlighter: pygments
+:pygments-style: pastie
+:icons: font
+:experimental:
+:toc!:
+
+## https://github.com/troessner/reek/blob/master/docs/Utility-Function.md[Why and How?]
+
+## How to Refactor (Ruby Edition)
+* Remove call method
+* Remove useless method
+
+## Example
+
+```ruby
+def has_tokenizer?(length_validator)
+  length_validator.options[:tokenizer]
+end
+
+if ActionPack::VERSION::STRING < '5'
+  def maximum_length_value_from(length_validator)
+    if length_validator && !has_tokenizer?(length_validator)
+      length_validator.options[:is] || length_validator.options[:maximum]
+    end
+  end
+elsif ActionPack::VERSION::STRING >= '5'
+  def maximum_length_value_from(length_validator)
+    if length_validator
+      length_validator.options[:is] || length_validator.options[:maximum]
+    end
+  end
+end
+```
+
+.Step 1
+Remove method call.
+```ruby
+if ActionPack::VERSION::STRING < '5'
+  def maximum_length_value_from(length_validator)
+    if length_validator
+      length_validator.options[:is] || length_validator.options[:maximum]
+    end
+  end
+elsif ActionPack::VERSION::STRING >= '5'
+  def maximum_length_value_from(length_validator)
+    if length_validator
+      length_validator.options[:is] || length_validator.options[:maximum]
+    end
+  end
+end
+```
+
+.Step 2
+Remove useless method.

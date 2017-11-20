@@ -23,25 +23,16 @@ module SimpleForm
         find_validator(:length)
       end
 
-      def has_tokenizer?(length_validator)
-        length_validator.options[:tokenizer]
-      end
-
       # Use validation with tokenizer if version of Rails is less than 5,
       # if not validate without the tokenizer, if version is greater than Rails 4.
-      if ActionPack::VERSION::STRING < '5'
-        def minimum_length_value_from(length_validator)
-          if length_validator && !has_tokenizer?(length_validator)
-            length_validator.options[:is] || length_validator.options[:minimum]
-          end
-        end
-      elsif ActionPack::VERSION::STRING >= '5'
-        def minimum_length_value_from(length_validator)
-          if length_validator
-            length_validator.options[:is] || length_validator.options[:minimum]
-          end
+
+      def minimum_length_value_from(length_validator)
+        lng_val = length_validator
+        if lng_val
+          length_validator.options[:is] || lng_val.options[:minimum]
         end
       end
+
     end
   end
 end

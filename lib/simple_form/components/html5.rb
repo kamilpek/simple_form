@@ -3,11 +3,11 @@ module SimpleForm
     # html5 component module
     module HTML5
       def initialize(*)
-        @html5 = false
+        @html_five = false
       end
 
       def html5(wrapper_options = nil)
-        @html5 = true
+        @html_five = true
 
         input_html_options[:required]        = input_html_required_option
         input_html_options[:'aria-required'] = input_html_aria_required_option
@@ -18,7 +18,7 @@ module SimpleForm
       end
 
       def html5?
-        @html5
+        @html_five
       end
 
       def input_html_required_option

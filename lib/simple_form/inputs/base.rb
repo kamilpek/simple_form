@@ -72,8 +72,9 @@ module SimpleForm
         @html_classes = SimpleForm.additional_classes_for(:input) { additional_classes }
 
         @input_html_classes = @html_classes.dup
-        if SimpleForm.input_class && !input_html_classes.empty?
-          input_html_classes << SimpleForm.input_class
+        sfic = SimpleForm.input_class
+        if sfic && !input_html_classes.empty?
+          input_html_classes << sfic
         end
 
         @input_html_options = html_options_for(:input, input_html_classes).tap do |option|
@@ -186,7 +187,7 @@ module SimpleForm
         lookups << :"defaults.#{reflection_or_attribute_name}"
         lookups << default
 
-        I18n.t(lookups.shift, scope: :"#{i18n_scope}.#{namespace}", default: lookups).presence
+        I18n.t(lookups.shift, scope: :"#{SimpleForm.i18n_scope}.#{namespace}", default: lookups).presence
       end
 
       def merge_wrapper_options(options, wrapper_options)
@@ -204,10 +205,6 @@ module SimpleForm
         else
           options
         end
-      end
-
-      def i18n_scope
-        SimpleForm.i18n_scope
       end
     end
   end

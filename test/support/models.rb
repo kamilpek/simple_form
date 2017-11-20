@@ -35,7 +35,7 @@ Picture = Struct.new(:id, :name) do
   end
 
   def self.all
-    Relation.new((1..3).map { |i| new(i, "#{name} #{i}") })
+    Relation.new((1..3).map { |item| new(item, "#{name} #{item}") })
   end
 end
 
@@ -53,7 +53,7 @@ Company = Struct.new(:id, :name) do
   end
 
   def self.all
-    Relation.new((1..3).map { |i| new(i, "#{name} #{i}") })
+    Relation.new((1..3).map { |item| new(item, "#{name} #{item}") })
   end
 
   def persisted?
@@ -61,11 +61,13 @@ Company = Struct.new(:id, :name) do
   end
 end
 
+# tag class
 class Tag < Company; end
 
 # tag group struct
 TagGroup = Struct.new(:id, :name, :tags)
 
+# user class
 class User
   extend ActiveModel::Naming
   include ActiveModel::Conversion
@@ -228,6 +230,7 @@ class User
   end
 end
 
+# validating user class
 class ValidatingUser < User
   include ActiveModel::Validations
   validates :name, presence: true
@@ -275,6 +278,7 @@ class ValidatingUser < User
   end
 end
 
+# Other Validating User class
 class OtherValidatingUser < User
   include ActiveModel::Validations
   validates_numericality_of :age,

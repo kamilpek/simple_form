@@ -9,7 +9,8 @@ module SimpleForm
       end
 
       def calculate_required
-        if !options[:required].nil?
+        opt = options
+        if !opt[:required].nil?
           options[:required]
         elsif has_validators?
           required_by_validators?

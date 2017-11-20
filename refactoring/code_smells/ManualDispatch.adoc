@@ -1,0 +1,35 @@
+# Duplicate Manual Dispatch
+:source-highlighter: pygments
+:pygments-style: pastie
+:icons: font
+:experimental:
+:toc!:
+
+## https://github.com/troessner/reek/blob/master/docs/Manual-Dispatch.md[Why and How?]
+
+## How to Refactor (Ruby Edition)
+* Remove useless fragment of code.
+
+## Example
+
+```ruby
+def simple_form_css_class(record, options)
+  html_options = options[:html]
+  as = options[:as]
+
+  if html_options.key?(:class)
+    html_options[:class]
+  elsif record.is_a?(String) || record.is_a?(Symbol)
+    as || record
+  else
+    record = record.last if record.is_a?(Array)
+    action = record.respond_to?(:persisted?) && record.persisted? ? :edit : :new
+    as ? "#{action}_#{as}" : dom_class(record, action)
+  end
+```
+
+.Step 1
+Remove the code.
+```ruby
+action = record.persisted? ? :edit : :new
+```

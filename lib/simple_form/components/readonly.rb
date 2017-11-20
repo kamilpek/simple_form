@@ -13,9 +13,8 @@ module SimpleForm
       private
 
       def readonly_attribute?
-        object.class.respond_to?(:readonly_attributes) &&
-          object.persisted? &&
-          object.class.readonly_attributes.include?(attribute_name.to_s)
+        object.class.readonly_attributes &&
+          object.persisted?
       end
     end
   end

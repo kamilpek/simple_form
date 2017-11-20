@@ -43,15 +43,13 @@ module SimpleForm
       end
 
       def label_html_options
-        label_html_classes = SimpleForm.additional_classes_for(:label) {
+        label_options = html_options_for(:label, SimpleForm.additional_classes_for(:label) {
           [input_type, required_class, disabled_class, SimpleForm.label_class].compact
-        }
-
-        label_options = html_options_for(:label, label_html_classes)
-        if options.key?(:input_html) && options[:input_html].key?(:id)
-          label_options[:for] = options[:input_html][:id]
+        })
+        if options.key?(:input_html)
+          options_input = options[:input_html]
+          label_options[:for] = options_input[:id] if options_input.key?(:id)
         end
-
         label_options
       end
 
@@ -68,10 +66,11 @@ module SimpleForm
 
       # First check labels translation and then human attribute name.
       def label_translation #:nodoc:
+        object_class = object.class
         if SimpleForm.translate_labels && (translated_label = translate_from_namespace(:labels))
           translated_label
-        elsif object.class.respond_to?(:human_attribute_name)
-          object.class.human_attribute_name(reflection_or_attribute_name.to_s)
+        elsif object_class.respond_to?(:human_attribute_name)
+          object_class.human_attribute_name(reflection_or_attribute_name.to_s)
         else
           attribute_name.to_s.humanize
         end

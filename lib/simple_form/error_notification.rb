@@ -11,7 +11,7 @@ module SimpleForm
 
     def render
       if has_errors?
-        template.content_tag(error_notification_tag, error_message, html_options)
+        template.content_tag(SimpleForm.error_notification_tag, error_message, html_options)
       end
     end
 
@@ -22,15 +22,11 @@ module SimpleForm
     end
 
     def has_errors?
-      object && object.respond_to?(:errors) && errors.present?
+      object && errors.present?
     end
 
     def error_message
       (@message || translate_error_notification).html_safe
-    end
-
-    def error_notification_tag
-      SimpleForm.error_notification_tag
     end
 
     def html_options
@@ -40,9 +36,7 @@ module SimpleForm
 
     def translate_error_notification
       lookups = []
-      lookups << :"#{object_name}"
-      lookups << :default_message
-      lookups << "Please review the problems below:"
+      lookups << :"#{object_name}" << :default_message << "Please review the problems below:"
       I18n.t(lookups.shift, scope: :"simple_form.error_notification", default: lookups)
     end
   end

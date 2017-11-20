@@ -37,7 +37,7 @@ module SimpleForm
         find_validator(:numericality)
       end
 
-      def evaluate_numericality_validator_option(option)
+      def evaluate_numericality_validator_option(option)        
         if option.is_a?(Numeric)
           option
         elsif option.is_a?(Symbol)

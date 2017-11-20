@@ -37,10 +37,10 @@ to
 See https://github.com/plataformatec/simple_form/pull/997 for more information.
   WARN
 
-  @@configured = false
+  @configured = false
 
   def self.configured? #:nodoc:
-    @@configured
+    @configured
   end
 
   ## CONFIGURATION OPTIONS
@@ -67,11 +67,11 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
 
   # You can wrap a collection of radio/check boxes in a pre-defined tag, defaulting to none.
   mattr_accessor :collection_wrapper_tag
-  @@collection_wrapper_tag = nil
+  @collection_wrapper_tag = nil
 
   # You can define the class to use on all collection wrappers, defaulting to none.
   mattr_accessor :collection_wrapper_class
-  @@collection_wrapper_class = nil
+  @collection_wrapper_class = nil
 
   # You can wrap each item in a collection of radio/check boxes with a tag,
   # defaulting to span. Please note that when using :boolean_style = :nested,
@@ -81,7 +81,7 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
 
   # You can define the class to use on all item wrappers, defaulting to none.
   mattr_accessor :item_wrapper_class
-  @@item_wrapper_class = nil
+  @item_wrapper_class = nil
 
   # How the label text should be generated altogether with the required text.
   mattr_accessor :label_text
@@ -89,13 +89,13 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
 
   # You can define the class to be used on all labels. Defaults to none.
   mattr_accessor :label_class
-  @@label_class = nil
+  @label_class = nil
 
   # Define the way to render check boxes / radio buttons with labels.
   #   inline: input + label (default)
   #   nested: label > input
   mattr_accessor :boolean_style
-  @@boolean_style = :inline
+  @boolean_style = :inline
 
   # DEPRECATED: You can define the class to be used on all forms. Default is
   # simple_form.
@@ -105,7 +105,7 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
   # You can define the default class to be used on all forms. Can be overriden
   # with `html: { :class }`. Defaults to none.
   mattr_accessor :default_form_class
-  @@default_form_class = nil
+  @default_form_class = nil
 
   # You can define which elements should obtain additional classes.
   mattr_accessor :generate_additional_classes_for
@@ -127,7 +127,7 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
   # to match as key, and the input type that will be used when the field name
   # matches the regexp as value, such as { /count/ => :integer }.
   mattr_accessor :input_mappings
-  @@input_mappings = nil
+  @input_mappings = nil
 
   # Custom wrappers for input types. This should be a hash containing an input
   # type as key and the wrapper that will be used for all inputs with specified type.
@@ -135,7 +135,7 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
   # You can also set a wrapper mapping per form basis.
   # e.g simple_form_for(@foo, wrapper_mappings: { check_boxes: :bootstrap_checkbox })
   mattr_accessor :wrapper_mappings
-  @@wrapper_mappings = nil
+  @wrapper_mappings = nil
 
   # Namespaces where SimpleForm should look for custom input classes that override
   # default inputs. Namespaces are given as string to allow lazy loading inputs.
@@ -147,11 +147,11 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
 
   # Default priority for time_zone inputs.
   mattr_accessor :time_zone_priority
-  @@time_zone_priority = nil
+  @time_zone_priority = nil
 
   # Default priority for country inputs.
   mattr_accessor :country_priority
-  @@country_priority = nil
+  @country_priority = nil
 
   # When off, do not use translations in labels. Disabling translation in
   # hints and placeholders can be done manually in the wrapper API.
@@ -160,7 +160,7 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
 
   # Automatically discover new inputs in Rails' autoload path.
   mattr_accessor :inputs_discovery
-  @@inputs_discovery = true
+  @inputs_discovery = true
 
   # Cache SimpleForm inputs discovery.
   mattr_accessor :cache_discovery
@@ -180,7 +180,7 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
 
   # Adds a class to each generated inputs
   mattr_accessor :input_class
-  @@input_class = nil
+  @input_class = nil
 
   # Defines if an input wrapper class should be included or not
   mattr_accessor :include_default_input_wrapper_class
@@ -194,14 +194,14 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
   # The default wrapper to be used by the FormBuilder.
   mattr_accessor :default_wrapper
   @@default_wrapper = :default
-  @@wrappers = {} #:nodoc:
+  @wrappers = {} #:nodoc:
 
   mattr_accessor :i18n_scope
   @@i18n_scope = 'simple_form'
 
   # Retrieves a given wrapper
   def self.wrapper(name)
-    @@wrappers[name.to_s] or raise WrapperNotFound, "Couldn't find wrapper with name #{name}"
+    @wrappers[name.to_s] or raise WrapperNotFound, "Couldn't find wrapper with name #{name}"
   end
 
   # Raised when fails to find a given wrapper name
@@ -214,9 +214,9 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
     if block_given?
       options                 = args.extract_options!
       name                    = args.first || :default
-      @@wrappers[name.to_s]   = build(options, &block)
+      @wrappers[name.to_s]   = build(options, &block)
     else
-      @@wrappers
+      @wrappers
     end
   end
 
@@ -261,7 +261,7 @@ See https://github.com/plataformatec/simple_form/pull/997 for more information.
   # Default way to setup Simple Form. Run rails generate simple_form:install
   # to create a fresh initializer with all configuration values.
   def self.setup
-    @@configured = true
+    @configured = true
     yield self
   end
 end

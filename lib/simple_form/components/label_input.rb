@@ -9,24 +9,22 @@ module SimpleForm
       end
 
       def label_input(wrapper_options = nil)
+        depr_component = deprecated_component(:input, wrapper_options)
         if options[:label] == false
-          deprecated_component(:input, wrapper_options)
+          depr_component
         else
-          deprecated_component(:label, wrapper_options) + deprecated_component(:input, wrapper_options)
+          deprecated_component(:label, wrapper_options) + depr_component
         end
       end
 
       private
 
       def deprecated_component(namespace, wrapper_options)
-        method = method(namespace)
-
-        if method.arity == 0
+        if method(namespace).arity == 0
           ActiveSupport::Deprecation.warn(SimpleForm::CUSTOM_INPUT_DEPRECATION_WARN % { name: namespace })
-
-          method.call
+          method(namespace).call
         else
-          method.call(wrapper_options)
+          method(namespace).call(wrapper_options)
         end
       end
     end

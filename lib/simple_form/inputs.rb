@@ -1,4 +1,5 @@
 module SimpleForm
+  # inputs module
   module Inputs
     extend ActiveSupport::Autoload
 

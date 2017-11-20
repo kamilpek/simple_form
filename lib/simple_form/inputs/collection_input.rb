@@ -75,7 +75,7 @@ module SimpleForm
 
         if collection_translated || collection_classes.include?(Array)
           { label: :first, value: :second }
-        elsif collection_includes_basic_objects?(collection_classes)
+        elsif (collection_classes & BASIC_OBJECT_CLASSES).any?
           { label: :to_s, value: :to_s }
         else
           detect_method_from_class(collection_classes)
@@ -91,10 +91,6 @@ module SimpleForm
 
       def detect_collection_classes(some_collection = collection)
         some_collection.map { |error| error.class }.uniq
-      end
-
-      def collection_includes_basic_objects?(collection_classes)
-        (collection_classes & BASIC_OBJECT_CLASSES).any?
       end
 
       def translate_collection

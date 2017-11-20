@@ -12,19 +12,23 @@ module SimpleForm
 
       def simple_form_for(record, options = {}, &block)
         options[:builder] ||= SimpleForm::FormBuilder
-        options[:html] ||= {}
-        unless options[:html].key?(:novalidate)
-          options[:html][:novalidate] = !SimpleForm.browser_validations
+        html_options = options[:html] ||= {}
+        unless html_options.key?(:novalidate)
+          html_options[:novalidate] = !SimpleForm.browser_validations
         end
-        if options[:html].key?(:class)
-          options[:html][:class] = [SimpleForm.form_class, options[:html][:class]].compact
+        if html_options.key?(:class)
+          html_options[:class] = [SimpleForm.form_class, html_options[:class]].compact
         else
-          options[:html][:class] = [SimpleForm.form_class, SimpleForm.default_form_class, simple_form_css_class(record, options)].compact
+          html_options[:class] = [SimpleForm.form_class, SimpleForm.default_form_class, simple_form_css_class(record, options)].compact
         end
 
         with_simple_form_field_error_proc do
           form_for(record, options, &block)
         end
+      end
+
+      def simple_form_for_html
+
       end
 
       def simple_fields_for(record_name, record_object = nil, options = {}, &block)
@@ -58,7 +62,7 @@ module SimpleForm
           as || record
         else
           record = record.last if record.is_a?(Array)
-          action = record.respond_to?(:persisted?) && record.persisted? ? :edit : :new
+          action = record.persisted? ? :edit : :new
           as ? "#{action}_#{as}" : dom_class(record, action)
         end
       end
